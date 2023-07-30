@@ -12,11 +12,22 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tarefas', function (Blueprint $table) {
+            // defaults
             $table->id();
+            
+            // requireds
             $table->string("title");
+
+            // optionals
             $table->string("description")->nullable();
-            // $table->string("assignee_id");
             $table->dateTime("due_date")->nullable();
+
+            // models relationships
+            $table->foreign('assignee_id')
+                ->references('id')
+                ->on('tarefas');
+
+            //defaults
             $table->timestamps();
         });
     }
