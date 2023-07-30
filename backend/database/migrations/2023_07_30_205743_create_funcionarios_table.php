@@ -12,7 +12,23 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('funcionarios', function (Blueprint $table) {
+            //default
             $table->id();
+            
+            //requireds
+            $table->string("first_name");
+            $table->string("last_name");
+
+            //optionals
+            $table->string("email")->unique();
+            $table->string("phone")->nullable();
+            
+            //relationships models
+            $table->foreign('department_id')
+                ->references('id')
+                ->on('departamentos');
+            
+            //default
             $table->timestamps();
         });
     }
