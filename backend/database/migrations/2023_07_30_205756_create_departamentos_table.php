@@ -12,8 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('departamentos', function (Blueprint $table) {
+            
+            // defaults
             $table->id();
+            
+            // requireds
             $table->string("name");
+
+            // defaults
             $table->timestamps();
         });
     }
