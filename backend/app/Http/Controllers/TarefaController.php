@@ -4,15 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\{StoreTarefaRequest, EditTarefaRequest, UpdateTarefaRequest};
 use App\Models\Tarefa;
+use OpenApi\Annotations as OA;
 
 class TarefaController extends Controller
 {
     /**
      * @OA\Get(
-     *      path="/profiles",
+     *      path="/api/tarefas",
      *      @OA\Response(
      *          response=200,
-     *          description="Successful operation",
+     *          description="Tarefas returned successfully!",
      *      ),
      *     @OA\PathItem (
      *     ),
@@ -41,6 +42,18 @@ class TarefaController extends Controller
 
     /**
      * Show the form for editing the specified resource.
+     */
+
+    /**
+     * @OA\Get(
+     *      path="/api/tarefas/edit/{id}",
+     *      @OA\Response(
+     *          response=200,
+     *          description="Tarefa edited successfully!",
+     *      ),
+     *     @OA\PathItem (
+     *     ),
+     * )
      */
     public function edit(EditTarefaRequest $request, Tarefa $tarefa)
     {

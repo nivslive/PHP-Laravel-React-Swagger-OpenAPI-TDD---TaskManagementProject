@@ -1,25 +1,35 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "My First API Documentation",
+        "title": "Task Management API",
         "contact": {
-            "email": "info@yeagger.com"
+            "email": "nivsoficial@gmail.com"
         },
         "version": "0.1"
     },
     "servers": [
         {
-            "url": "https://foo.localhost:8000/api/",
-            "description": "Learning env"
+            "url": "https://localhost:8000/api/tarefas",
+            "description": "Tarefas"
         }
     ],
     "paths": {
-        "/profiles": {
+        "/api/tarefas": {
             "get": {
-                "operationId": "f1417025027c4b40acaa70372b94a336",
+                "operationId": "78610a946743bf42d67599e1c7be6c9d",
                 "responses": {
                     "200": {
-                        "description": "Successful operation"
+                        "description": "Tarefas returned successfully!"
+                    }
+                }
+            }
+        },
+        "/api/tarefas/edit/{id}": {
+            "get": {
+                "operationId": "0de5ad5fc9a0b835b39710ff69c8e112",
+                "responses": {
+                    "200": {
+                        "description": "Tarefa edited successfully!"
                     }
                 }
             }
