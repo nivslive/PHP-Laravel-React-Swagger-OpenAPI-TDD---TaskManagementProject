@@ -8,7 +8,15 @@ use App\Models\Tarefa;
 class TarefaController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * @OA\Get(
+     *      path="/profiles",
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *      ),
+     *     @OA\PathItem (
+     *     ),
+     * )
      */
     public function index()
     {
