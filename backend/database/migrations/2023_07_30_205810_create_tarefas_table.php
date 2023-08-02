@@ -23,9 +23,10 @@ return new class extends Migration
             $table->dateTime("due_date")->nullable();
 
             // models relationships
+            $table->unsignedBigInteger('assignee_id');
             $table->foreign('assignee_id')
                 ->references('id')
-                ->on('tarefas');
+                ->on('funcionarios');
 
             //defaults
             $table->timestamps();
