@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Departamento;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,8 +17,15 @@ class FuncionarioFactory extends Factory
      */
     public function definition(): array
     {
+
         return [
-            //
+            'first_name' => fake()->name(),
+            'last_name' => fake()->lastName(),
+            'email' => fake()->email(),
+            'phone' => fake()->phoneNumber(),
+            'department_Id' => Departamento::factory()->create()->id,
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }
