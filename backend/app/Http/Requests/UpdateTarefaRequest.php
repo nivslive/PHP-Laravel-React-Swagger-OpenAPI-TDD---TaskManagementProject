@@ -22,7 +22,20 @@ class UpdateTarefaRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            "title" => "required|string",
+            "description" => "string",
+            // "assignee_id" => "unique:funcionarios"
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'title.string' => 'O campo title deve ser uma string.',
+            'title.required' => 'O campo title é requerido.',
+
+            'description.string' => 'O campo description deve ser uma string.',
+            'description.required' => 'O campo description é requerido.',
         ];
     }
 }

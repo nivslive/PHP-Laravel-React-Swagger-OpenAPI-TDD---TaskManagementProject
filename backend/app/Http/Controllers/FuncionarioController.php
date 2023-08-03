@@ -2,64 +2,44 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateFuncionarioRequest;
 use App\Http\Requests\StoreFuncionarioRequest;
 use App\Http\Requests\UpdateFuncionarioRequest;
 use App\Models\Funcionario;
+use Illuminate\Http\JsonResponse;
 
-class FuncionarioController extends Controller
+class FuncionarioController extends Controller implements CRUDControllerInterface
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+
+    public function all() {}
+    public function find($id) {
+
+    }
+    public function create(CreateFuncionarioRequest $request)
     {
-        //
+
+        $funcionario = Funcionario::create($request->except('_token'));
+
+        if(!$funcionario) {
+            return response()->json(['message' => 'Não foi possível criar um funcionário.'], 500);
+        }
+
+        return response()->json(['message' => 'Funcionário criado com sucesso.', 'data' => $funcionario], 200);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function update(UpdateFuncionarioRequest $request, $id): JsonResponse
+
     {
-        //
+        $funcionario = Funcionario::find($id);
+
+        if(!$funcionario) {
+            return response()->json(['message' => 'Não foi possível achar um funcionário.'], 500);
+        }
+
+        return response()->json(['message' => 'Funcionário editado com sucesso.', 'data' => $funcionario], 200);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreFuncionarioRequest $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Funcionario $funcionario)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Funcionario $funcionario)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateFuncionarioRequest $request, Funcionario $funcionario)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Funcionario $funcionario)
+    public function delete(Funcionario $funcionario)
     {
         //
     }

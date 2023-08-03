@@ -24,8 +24,8 @@ Route::middleware('auth:jwt')->group(function() {
         Route::get('/all', 'all');
         Route::get('/{id}', 'find');
         Route::post('/', 'create');
-        Route::put('/', 'update');
-        Route::delete('/', 'delete');
+        Route::put('/{id}', 'update');
+        Route::delete('/{id}', 'delete');
     });
     
     Route::controller(TarefaController::class)->prefix('/tarefas')->group(function() {

@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\{StoreTarefaRequest, EditTarefaRequest, UpdateTarefaRequest};
+use App\Http\Requests\{CreateTarefaRequest, StoreTarefaRequest, EditTarefaRequest, UpdateTarefaRequest};
 use App\Models\Tarefa;
 use OpenApi\Annotations as OA;
-use \Illuminate\Http\JsonResponse;
+use Illuminate\Http\JsonResponse;
 
-class TarefaController extends Controller
+class TarefaController extends Controller implements CRUDControllerInterface
 {
     /**
      * @OA\Post(
@@ -20,7 +20,7 @@ class TarefaController extends Controller
      *     ),
      * )
      */
-    public function create(StoreTarefaRequest $request)
+    public function create(CreateTarefaRequest $request)
     {
 
         $tarefa = Tarefa::create($request->except('_token'));
@@ -86,7 +86,7 @@ class TarefaController extends Controller
      *     ),
      * )
      */
-    public function update(EditTarefaRequest $request, int $id): JsonResponse
+    public function update(UpdateTarefaRequest $request, int $id): JsonResponse
     {
         $tarefa = Tarefa::find($id);
         if(!$tarefa) {

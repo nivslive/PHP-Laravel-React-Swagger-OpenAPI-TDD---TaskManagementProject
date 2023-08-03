@@ -6,7 +6,7 @@ use App\Http\Requests\StoreDepartamentoRequest;
 use App\Http\Requests\UpdateDepartamentoRequest;
 use App\Models\Departamento;
 
-class DepartamentoController extends Controller
+class DepartamentoController extends Controller implements CRUDControllerInterface
 {
     /**
      * Display a listing of the resource.
@@ -15,6 +15,9 @@ class DepartamentoController extends Controller
     {
         //
     }
+
+    public function all(){}
+    public function find(){}
 
     /**
      * Show the form for creating a new resource.
@@ -33,22 +36,6 @@ class DepartamentoController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(Departamento $departamento)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Departamento $departamento)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      */
     public function update(UpdateDepartamentoRequest $request, Departamento $departamento)
@@ -59,7 +46,7 @@ class DepartamentoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Departamento $departamento)
+    public function delete(Departamento $departamento)
     {
         //
     }
