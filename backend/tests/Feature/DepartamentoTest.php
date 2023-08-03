@@ -14,6 +14,8 @@ class DepartamentoTest extends TestCase implements CRUDTestsInterface
      * A basic feature test example.
      */
 
+     use RefreshDatabase;
+
      public function test_i_can_create(): void  {
         $user = \App\Models\User::factory()->create();
         $token = auth()->attempt(['email' => $user->email, 'password' => 'password']);

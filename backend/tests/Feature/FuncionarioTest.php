@@ -5,14 +5,12 @@ namespace Tests\Feature;
 use App\Models\Departamento;
 use Tests\Feature\CRUDTestsInterface;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class FuncionarioTest extends TestCase implements CRUDTestsInterface
 {
-    /**
-     * A basic feature test example.
-     */
+
+    use RefreshDatabase;
 
      public function test_i_can_create(): void  {
         $user = \App\Models\User::factory()->create();
