@@ -34,24 +34,27 @@ class FuncionarioTest extends TestCase implements CRUDTestsInterface
     }
 
     public function test_i_can_show() : void {
-        // $user = \App\Models\User::factory()->create();
-        // $token = auth()->attempt(['email' => $user->email, 'password' => 'password']);
+        $user = \App\Models\User::factory()->create();
+        $token = auth()->attempt(['email' => $user->email, 'password' => 'password']);
 
-        // $funcionario = Funcionario::factory()->create();
+        $departamento = Departamento::factory()->create();
         
-        // $createResponse = $this->withHeaders(['Authorization' => 'Bearer ' . $token])
-        //     ->post('/tarefas', ['title' => 'testando', 'description' => 'test', 'assignee_id' => $funcionario->id]);
+        $createResponse = $this->withHeaders(['Authorization' => 'Bearer ' . $token])
+            ->post('/funcionarios', [
+                'first_name' => 'nome', 
+                'last_name' => 'sobrenome', 
+                'phone' => '119748844',
+                'email' => 'testsss@test.com',
+                'department_id' => $departamento->id
+        ]);
+        $data = json_decode($createResponse->getContent())->data;
 
-        // $data = json_decode($createResponse->getContent())->data;
+        $response = $this->withHeaders(['Authorization' => 'Bearer ' . $token])
+            ->get("/funcionarios/{$data->id}");
+        $finalData = json_decode($response->getContent())->data;
 
-        // $response = $this->withHeaders(['Authorization' => 'Bearer ' . $token])
-        //     ->get("/tarefas/{$data->id}", ['title' => 'testando', 'description' => 'test', 'assignee_id' => $funcionario->id]);
-        
-        // $finalData = json_decode($createResponse->getContent())->data;
-
-        // $this->assertEquals($finalData->title, 'testando');
-
-        // $response->assertStatus(200);
+        $this->assertEquals($finalData->first_name, 'nome');
+        $response->assertStatus(200);
     }
 
     public function test_i_can_edit(): void {
@@ -85,39 +88,26 @@ class FuncionarioTest extends TestCase implements CRUDTestsInterface
         $this->assertEquals($finalData->first_name, 'test');
         $response->assertStatus(200);
 
-        // $user = \App\Models\User::factory()->create();
-        // $token = auth()->attempt(['email' => $user->email, 'password' => 'password']);
-
-        // $funcionario = Funcionario::factory()->create();
-        
-        // $createResponse = $this->withHeaders(['Authorization' => 'Bearer ' . $token])
-        //     ->post('/tarefas', ['title' => 'teste', 'description' => 'test', 'assignee_id' => $funcionario->id]);
-
-        // $data = json_decode($createResponse->getContent())->data;
-
-        // $response = $this->withHeaders(['Authorization' => 'Bearer ' . $token])
-        //     ->put("/tarefas/{$data->id}", ['title' => 'testando', 'description' => 'test']);
-        // $finalData = json_decode($response->getContent())->data;
-
-        // $this->assertEquals($finalData->title, 'testando');
-
-        // $response->assertStatus(200);
     }
     public function test_i_can_delete() : void {
-        // $user = \App\Models\User::factory()->create();
-        // $token = auth()->attempt(['email' => $user->email, 'password' => 'password']);
+        $user = \App\Models\User::factory()->create();
+        $token = auth()->attempt(['email' => $user->email, 'password' => 'password']);
 
-        // $funcionario = Funcionario::factory()->create();
+        $departamento = Departamento::factory()->create();
         
-        // $createResponse = $this->withHeaders(['Authorization' => 'Bearer ' . $token])
-        //     ->post('/tarefas', ['title' => 'teste', 'description' => 'test', 'assignee_id' => $funcionario->id]);
+        $createResponse = $this->withHeaders(['Authorization' => 'Bearer ' . $token])
+            ->post('/funcionarios', [
+                'first_name' => 'nome', 
+                'last_name' => 'sobrenome', 
+                'phone' => '119748844',
+                'email' => 'tests@test.com',
+                'department_id' => $departamento->id
+        ]);
+        $data = json_decode($createResponse->getContent())->data;
 
-        // $data = json_decode($createResponse->getContent())->data;
-
-        // $response = $this->withHeaders(['Authorization' => 'Bearer ' . $token])
-        //     ->delete("/tarefas/{$data->id}");
-
-        // $response->assertStatus(200);
+        $response = $this->withHeaders(['Authorization' => 'Bearer ' . $token])
+            ->delete("/funcionarios/{$data->id}");
+        $response->assertStatus(200);
     }
 
 

@@ -7,7 +7,7 @@ use App\Models\Tarefa;
 use OpenApi\Annotations as OA;
 use Illuminate\Http\JsonResponse;
 
-class TarefaController extends Controller implements CRUDControllerInterface
+class TarefaController extends Controller
 {
     /**
      * @OA\Post(

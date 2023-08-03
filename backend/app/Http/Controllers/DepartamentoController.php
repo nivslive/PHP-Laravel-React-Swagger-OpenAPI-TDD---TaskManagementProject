@@ -6,7 +6,7 @@ use App\Http\Requests\StoreDepartamentoRequest;
 use App\Http\Requests\UpdateDepartamentoRequest;
 use App\Models\Departamento;
 
-class DepartamentoController extends Controller implements CRUDControllerInterface
+class DepartamentoController extends Controller
 {
     /**
      * Display a listing of the resource.

@@ -8,12 +8,16 @@ use App\Http\Requests\UpdateFuncionarioRequest;
 use App\Models\Funcionario;
 use Illuminate\Http\JsonResponse;
 
-class FuncionarioController extends Controller implements CRUDControllerInterface
+class FuncionarioController extends Controller
 {
 
     public function all() {}
     public function find($id) {
-
+        $funcionario = Funcionario::find($id);
+        if(!$funcionario) {
+            return response()->json(['message' => 'Não foi possível achar um funcionário.'], 500);
+        }
+        return response()->json(['message' => 'Funcionário editado com sucesso.', 'data' => $funcionario], 200);
     }
     public function create(CreateFuncionarioRequest $request)
     {
@@ -31,16 +35,21 @@ class FuncionarioController extends Controller implements CRUDControllerInterfac
 
     {
         $funcionario = Funcionario::find($id);
-
         if(!$funcionario) {
             return response()->json(['message' => 'Não foi possível achar um funcionário.'], 500);
         }
 
+        $funcionario->update($request->except('_token'));
         return response()->json(['message' => 'Funcionário editado com sucesso.', 'data' => $funcionario], 200);
     }
 
-    public function delete(Funcionario $funcionario)
+    public function delete($id)
     {
-        //
+        $funcionario = Funcionario::find($id);
+        if(!$funcionario) {
+            return response()->json(['message' => 'Não existe esse funcionário.'], 500);
+        }
+        $funcionario->delete();
+        return response()->json(['message'=> 'Funcionário apagada com sucesso.'], 200);
     }
 }
