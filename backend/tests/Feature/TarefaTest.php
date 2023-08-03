@@ -8,12 +8,12 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class TarefaTest extends TestCase
+class TarefaTest extends TestCase implements CRUDTestsInterface
 {
 
     use RefreshDatabase;
 
-    public function test_can_i_create_a_tarefa(): void  {
+    public function test_i_can_create(): void  {
         $user = \App\Models\User::factory()->create();
         $token = auth()->attempt(['email' => $user->email, 'password' => 'password']);
 
@@ -24,7 +24,7 @@ class TarefaTest extends TestCase
 
     }
 
-    public function test_can_i_show_a_tarefa() : void {
+    public function test_i_can_show() : void {
         $user = \App\Models\User::factory()->create();
         $token = auth()->attempt(['email' => $user->email, 'password' => 'password']);
 
@@ -45,7 +45,7 @@ class TarefaTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_can_i_edit_a_tarefa(): void {
+    public function test_i_can_edit(): void {
         $user = \App\Models\User::factory()->create();
         $token = auth()->attempt(['email' => $user->email, 'password' => 'password']);
 
@@ -64,7 +64,7 @@ class TarefaTest extends TestCase
 
         $response->assertStatus(200);
     }
-    public function test_can_i_should_delete_a_tarefa() : void {
+    public function test_i_can_delete() : void {
         $user = \App\Models\User::factory()->create();
         $token = auth()->attempt(['email' => $user->email, 'password' => 'password']);
 
