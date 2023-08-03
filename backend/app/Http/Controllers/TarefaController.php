@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 use App\Http\Requests\{StoreTarefaRequest, EditTarefaRequest, UpdateTarefaRequest};
 use App\Models\Tarefa;
 use OpenApi\Annotations as OA;
+use \Illuminate\Http\JsonResponse;
 
 class TarefaController extends Controller
 {
     /**
-     * @OA\Get(
-     *      path="/api/tarefas",
+     * @OA\Post(
+     *      path="/tarefas",
      *      @OA\Response(
      *          response=200,
      *          description="Tarefas returned successfully!",
@@ -19,30 +20,60 @@ class TarefaController extends Controller
      *     ),
      * )
      */
-    public function index()
+    public function create(StoreTarefaRequest $request)
     {
-        //
+
+        $tarefa = Tarefa::create($request->except('_token'));
+
+        if(!$tarefa) {
+            return response()->json(['message' => 'Não foi possível criar a tarefa.'], 500);
+        }
+
+        return response()->json(['message' => 'Tarefa criada com sucesso.', 'data' => $tarefa], 200);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * @OA\Get(
+     *      path="/tarefas/{tarefa_id}",
+     *      @OA\Parameter(
+     *          name="tarefa_id",
+     *          description="ID da tarefa",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(type="integer")
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Tarefas returned successfully!",
+     *      ),
+     * )
      */
-    public function store(StoreTarefaRequest $request)
+    public function find($tarefa_id)
     {
-        return Tarefa::create($request);
+
+        $tarefa = Tarefa::find($tarefa_id);
+
+        if(!$tarefa) {
+            return response()->json(['message' => 'Não existe essa tarefa.'], 500);
+        }
+
+        return response()->json(['message' => 'Sucesso ao encontrar a tarefa do id ' . $tarefa_id, 'data' => $tarefa], 200);
     }
 
     /**
-     * Display the specified resource.
+     * @OA\Get(
+     *      path="/tarefas/all",
+     *      @OA\Response(
+     *          response=200,
+     *          description="Tarefas returned successfully!",
+     *      ),
+     *     @OA\PathItem (
+     *     ),
+     * )
      */
-    public function show(Tarefa $tarefa)
-    {
-        return $tarefa;
+    public function all() {
+        return Tarefa::all();
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
 
     /**
      * @OA\Get(
@@ -55,26 +86,36 @@ class TarefaController extends Controller
      *     ),
      * )
      */
-    public function edit(EditTarefaRequest $request, Tarefa $tarefa)
+    public function update(EditTarefaRequest $request, int $id): JsonResponse
     {
-        $tarefa->edit($request->all());
-        $tarefa->save();
-        return response()->json($tarefa);
+        $tarefa = Tarefa::find($id);
+        if(!$tarefa) {
+            return response()->json(['message' => 'Não existe essa tarefa.'], 500);
+        }
+        
+        $tarefa->update($request->except('_token'));
+        return response()->json(['message' => 'Tarefa is created!', 'data' => $tarefa ], 200);
     }
 
-    /**
-     * Update the specified resource in storage.
+   /**
+     * @OA\Get(
+     *      path="/api/tarefas",
+     *      @OA\Response(
+     *          response=200,
+     *          description="Tarefas returned successfully!",
+     *      ),
+     *     @OA\PathItem (
+     *     ),
+     * )
      */
-    public function update(UpdateTarefaRequest $request, Tarefa $tarefa)
+    public function delete($id)
     {
-        //
-    }
+        $tarefa = Tarefa::find($id);
+        if(!$tarefa) {
+            return response()->json(['message' => 'Não existe essa tarefa.'], 500);
+        }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Tarefa $tarefa)
-    {
-        //
+        $tarefa->delete();
+        return response()->json(['message'=> 'Tarefa apagada com sucesso.'], 200);
     }
 }

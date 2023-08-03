@@ -3,29 +3,81 @@
 namespace Tests\Feature;
 
 use App\Http\Requests\EditTarefaRequest;
+use App\Models\Funcionario;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class TarefaTest extends TestCase
 {
-    /**
-     * A basic feature test example.
-     */
-    public function test_example(): void
-    {
-        $response = $this->get('/');
+
+    use RefreshDatabase;
+
+    public function test_can_i_create_a_tarefa(): void  {
+        $user = \App\Models\User::factory()->create();
+        $token = auth()->attempt(['email' => $user->email, 'password' => 'password']);
+
+        $funcionario = Funcionario::factory()->create();
+        $response = $this->withHeaders(['Authorization' => 'Bearer ' . $token])
+            ->post('/tarefas', ['title' => 'test', 'description' => 'test', 'assignee_id' => $funcionario->id]);
+        $response->assertStatus(200);
+
+    }
+
+    public function test_can_i_show_a_tarefa() : void {
+        $user = \App\Models\User::factory()->create();
+        $token = auth()->attempt(['email' => $user->email, 'password' => 'password']);
+
+        $funcionario = Funcionario::factory()->create();
+        
+        $createResponse = $this->withHeaders(['Authorization' => 'Bearer ' . $token])
+            ->post('/tarefas', ['title' => 'testando', 'description' => 'test', 'assignee_id' => $funcionario->id]);
+
+        $data = json_decode($createResponse->getContent())->data;
+
+        $response = $this->withHeaders(['Authorization' => 'Bearer ' . $token])
+            ->get("/tarefas/{$data->id}", ['title' => 'testando', 'description' => 'test', 'assignee_id' => $funcionario->id]);
+        
+        $finalData = json_decode($createResponse->getContent())->data;
+
+        $this->assertEquals($finalData->title, 'testando');
 
         $response->assertStatus(200);
     }
 
-    public function testEditIsSuccessful()
-    {
-        $request = new EditTarefaRequest();
-        $request->set('titulo', 'New Title');
-        $request->set('descricao', 'New Description');
-        $response = $this->call('POST', '/api/tarefas/1', $request->all());
-        $response->assertOk();
-        $this->assertTrue($response->json('success'));
+    public function test_can_i_edit_a_tarefa(): void {
+        $user = \App\Models\User::factory()->create();
+        $token = auth()->attempt(['email' => $user->email, 'password' => 'password']);
+
+        $funcionario = Funcionario::factory()->create();
+        
+        $createResponse = $this->withHeaders(['Authorization' => 'Bearer ' . $token])
+            ->post('/tarefas', ['title' => 'teste', 'description' => 'test', 'assignee_id' => $funcionario->id]);
+
+        $data = json_decode($createResponse->getContent())->data;
+
+        $response = $this->withHeaders(['Authorization' => 'Bearer ' . $token])
+            ->put("/tarefas/{$data->id}", ['title' => 'testando', 'description' => 'test']);
+        $finalData = json_decode($response->getContent())->data;
+
+        $this->assertEquals($finalData->title, 'testando');
+
+        $response->assertStatus(200);
+    }
+    public function test_can_i_should_delete_a_tarefa() : void {
+        $user = \App\Models\User::factory()->create();
+        $token = auth()->attempt(['email' => $user->email, 'password' => 'password']);
+
+        $funcionario = Funcionario::factory()->create();
+        
+        $createResponse = $this->withHeaders(['Authorization' => 'Bearer ' . $token])
+            ->post('/tarefas', ['title' => 'teste', 'description' => 'test', 'assignee_id' => $funcionario->id]);
+
+        $data = json_decode($createResponse->getContent())->data;
+
+        $response = $this->withHeaders(['Authorization' => 'Bearer ' . $token])
+            ->delete("/tarefas/{$data->id}");
+
+        $response->assertStatus(200);
     }
 }
