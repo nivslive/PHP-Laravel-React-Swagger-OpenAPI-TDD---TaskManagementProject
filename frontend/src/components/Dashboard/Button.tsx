@@ -10,6 +10,7 @@ const Button = (props: any) => {
     function switchList(e:any) {
         e.preventDefault();
         dispatch(dashboardActions.changeList({listName: props.name}));
+        console.log(selector.listName, 'listName');
         switch(selector.listName) {
                 case 'tarefas':
                     tarefaData.all().then((response) => {

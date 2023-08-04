@@ -28,7 +28,7 @@ const initialState: DataState = {
   listName: '',
   iCanSeeEditModal: false,
   principalList: [],
-  backupList: [],
+  backupList: {funcionarios: [], tarefas: [], departamentos: [],},
   editData: {},
   editDataKey: null,
   // content: {funcionarios: [], tarefas: [], departamentos: []},
@@ -43,10 +43,29 @@ export const dashboardSlice = createSlice({
     },
     setListData(state, action: PayloadAction<any>) {
       state.principalList = action.payload.data;
+      
+      if(state.listName === 'funcionarios') {
+        state.backupList.funcionarios = state.principalList;
+      }
+      if(state.listName === 'tarefas') {
+        state.backupList.tarefas = state.principalList;
+      }
+      if(state.listName === 'departamentos') {
+        state.backupList.tarefas = state.principalList;
+      }
       state.backupList = state.principalList;
     },
     searchByWord: (state, action: PayloadAction<any>) => {
-      state.principalList = state.backupList;
+      if(state.listName === 'funcionarios') {
+        state.principalList = state.backupList.funcionarios;
+      }
+      if(state.listName === 'tarefas') {
+        state.principalList = state.backupList.tarefas;
+      }
+      if(state.listName === 'departamentos') {
+        state.principalList = state.backupList.departamentos;
+      }
+
       state.principalList = state.principalList.filter((item: any) =>
         item.title.toLowerCase().includes(action.payload.searchText.toLowerCase()));
     },
