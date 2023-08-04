@@ -4,12 +4,13 @@ const Departamentos = () => {
     // let test = [{title: 'test'}, {title: 'testando'}];
     let list = useSelector((state: any) => state.dashboard.principalList);
     if(list === undefined) return <></>;
+    console.log(list, 'list');
     return (<>
     <table className="table">
     <thead>
                 <tr>
                 <th scope="col">#</th>
-                <th scope="col">Titulo</th>
+                <th scope="col">Nome</th>
                 <th scope="col">Opções</th>
                 </tr>
     </thead>

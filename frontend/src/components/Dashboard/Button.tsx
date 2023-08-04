@@ -7,12 +7,13 @@ import departamentoData from "../../data/Departamento";
 const Button = (props: any) => {
     const dispatch = useDispatch();
     const selector = useSelector((state: any) => state.dashboard);
-    function switchList(e:any) {
-        e.preventDefault();
-        dispatch(dashboardActions.changeList({listName: props.name}));
-        console.log(selector.listName, 'listName');
+    useEffect(() => {
         switch(selector.listName) {
-                case 'tarefas':
+            case 'tarefas':
+                if(selector.backupList.tarefas.length !== 0) {
+                    console.log(selector.backupList.tarefas.length !== 0, selector.backupList.tarefas.length, 0)
+                    dispatch(dashboardActions.setListData({listName: selector.listName, data: selector.backupList.tarefas}));
+                } else {
                     tarefaData.all().then((response) => {
                         if (response.status === 200) {
                             return response.json(); 
@@ -21,27 +22,36 @@ const Button = (props: any) => {
                         }
                     }).then((data) => {
                         console.log(data, 'data');
-                        dispatch(dashboardActions.setListData({listName: selector.listName, data}));
+                        dispatch(dashboardActions.setListData({listName: props.name, data}));
                     }).catch((error) => {
                         console.error("Erro:", error);
                     });
-                    break;
-                case 'departamentos':
-                        departamentoData.all().then((response) => {
-                            if (response.status === 200) {
-                                return response.json(); 
-                            } else {
-                                throw new Error("Erro na requisição"); 
-                            }
-                        }).then((data) => {
-                            console.log(data, 'data');
-                            dispatch(dashboardActions.setListData({listName: selector.listName, data}));
-                        }).catch((error) => {
-                            console.error("Erro:", error);
-                        });
-                    break;
-        }
-        
+                }
+                break;
+            case 'departamentos':
+                if(selector.backupList.departamentos.length !== 0) {
+                    console.log(selector.backupList.departamentos.length !== 0, selector.backupList.tarefas.length, 0)
+                    dispatch(dashboardActions.setListData({listName: props.name, data: selector.backupList.departamentos}));
+                } else {
+                    departamentoData.all().then((response) => {
+                        if (response.status === 200) {
+                            return response.json(); 
+                        } else {
+                            throw new Error("Erro na requisição"); 
+                        }
+                    }).then((data) => {
+                        console.log(data, 'data');
+                        dispatch(dashboardActions.setListData({listName: props.listName, data}));
+                    }).catch((error) => {
+                        console.error("Erro:", error);
+                    });
+                }
+                break;
+    }
+    }, [selector.listName]);
+    function switchList(e:any) {
+        e.preventDefault();
+        dispatch(dashboardActions.changeList({listName: props.name}));
     }
     return <a href="#" onClick={switchList}><button className={`btn pe-3 me-3 my-3 ` + (selector.listName === props.name ? `btn-primary` : `btn-dark`)}> {props.name} </button></a>
 }

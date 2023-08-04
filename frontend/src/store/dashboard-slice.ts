@@ -40,20 +40,27 @@ export const dashboardSlice = createSlice({
   reducers: {
     changeList: (state, action: PayloadAction<ChangeListState>) => {
       state.listName = action.payload.listName;
+      if(state.iCanSeeEditModal) state.iCanSeeEditModal = false;
     },
-    setListData(state, action: PayloadAction<any>) {
-      state.principalList = action.payload.data;
+    setListData(state, action: PayloadAction<any>) {      
       
-      if(state.listName === 'funcionarios') {
-        state.backupList.funcionarios = state.principalList;
+      // prepare backups
+      if(state.listName === 'funcionarios' && state.backupList.funcionarios.length === 0) {
+        state.backupList.funcionarios = action.payload.data;
+      } else if(state.listName === 'tarefas' && state.backupList.tarefas.length === 0)  {
+        state.backupList.tarefas = action.payload.data;
+      } else if(state.listName === 'departamentos' && state.backupList.departamentos.length === 0) {
+        state.backupList.departamentos = action.payload.data;
       }
-      if(state.listName === 'tarefas') {
-        state.backupList.tarefas = state.principalList;
-      }
+
+      // inject backups on principal list
       if(state.listName === 'departamentos') {
-        state.backupList.tarefas = state.principalList;
+        state.principalList = state.backupList.departamentos;
+      } else if(state.listName === 'tarefas') {
+        state.principalList = state.backupList.tarefas;
+      } else if(state.listName === 'funcionarios') {
+        state.principalList = state.backupList.funcionarios;
       }
-      state.backupList = state.principalList;
     },
     searchByWord: (state, action: PayloadAction<any>) => {
       if(state.listName === 'funcionarios') {
@@ -61,13 +68,16 @@ export const dashboardSlice = createSlice({
       }
       if(state.listName === 'tarefas') {
         state.principalList = state.backupList.tarefas;
+        state.principalList = state.principalList.filter((item: any) =>
+          item.title.toLowerCase().includes(action.payload.searchText.toLowerCase()));
       }
       if(state.listName === 'departamentos') {
         state.principalList = state.backupList.departamentos;
+        state.principalList = state.principalList.filter((item: any) =>
+          item.name.toLowerCase().includes(action.payload.searchText.toLowerCase()));
       }
 
-      state.principalList = state.principalList.filter((item: any) =>
-        item.title.toLowerCase().includes(action.payload.searchText.toLowerCase()));
+
     },
     openModal: (state, action: PayloadAction<any>) => {
       state.editData = state.principalList[action.payload.id];
