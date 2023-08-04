@@ -11,6 +11,14 @@ class Tarefas extends Fetch implements ITarefa {
     show() {
         throw new Error("Method not implemented.");
     }
+
+    async sendData(content: any) {
+        return await this.post(undefined, content);
+    }
+
+    async update(id: string, content: any) {
+        return await this.put(id, content);
+    }
     // get() {
     //     throw new Error("Method not implemented.");
     // }
