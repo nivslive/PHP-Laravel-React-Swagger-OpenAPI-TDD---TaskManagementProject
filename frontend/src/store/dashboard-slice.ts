@@ -14,6 +14,7 @@ interface DataState {
     listName: String,
     principalList: any,
     backupList: any,
+    editData: any,
     // content: {
     //   funcionarios: FuncionarioState[] | [],
     //   tarefas: TarefaState[] | [] | any,
@@ -25,6 +26,7 @@ const initialState: DataState = {
   listName: '',
   principalList: [],
   backupList: [],
+  editData: {},
   // content: {funcionarios: [], tarefas: [], departamentos: []},
 }
 
@@ -43,6 +45,9 @@ export const dashboardSlice = createSlice({
       state.principalList = state.backupList;
       state.principalList = state.principalList.filter((item: any) =>
         item.title.toLowerCase().includes(action.payload.searchText.toLowerCase()));
+    },
+    openModal: (state, action: PayloadAction<any>) => {
+      state.editData = state.principalList[action.payload.number];
     },
     // searchByFuncionario: (state, action: PayloadAction<SearchByFuncionarioState>) => {
 

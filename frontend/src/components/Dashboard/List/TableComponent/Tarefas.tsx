@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-
+import TableComponents from "./index";
 const Tarefas = () => {
     // let test = [{title: 'test'}, {title: 'testando'}];
     let list = useSelector((state: any) => state.dashboard.principalList);
@@ -10,6 +10,7 @@ const Tarefas = () => {
                 <tr>
                 <th scope="col">#</th>
                 <th scope="col">Nome</th>
+                <th scope="col">Opções</th>
                 </tr>
     </thead>
     {   list.map((e: any, k: number) => {
@@ -19,6 +20,7 @@ const Tarefas = () => {
                 <tr>
                 <th scope="row">{k + 1}</th>
                 <td>{e.title}</td>
+                <td><TableComponents.EditButton id={k}/></td>
                 </tr>
             </tbody>
 
