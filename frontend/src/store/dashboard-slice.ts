@@ -49,9 +49,12 @@ export const dashboardSlice = createSlice({
         item.title.toLowerCase().includes(action.payload.searchText.toLowerCase()));
     },
     openModal: (state, action: PayloadAction<any>) => {
-      state.editData = state.principalList[action.payload.number];
+      state.editData = state.principalList[action.payload.id];
       state.iCanSeeEditModal = true;
     },
+    closeModal: (state) => {
+      state.iCanSeeEditModal = false;
+    }, 
     // searchByFuncionario: (state, action: PayloadAction<SearchByFuncionarioState>) => {
 
     // }
