@@ -11,7 +11,9 @@ use Illuminate\Http\JsonResponse;
 class DepartamentoController extends Controller
 {
 
-    public function all() {}
+    public function all() {
+        return Departamento::all();
+    }
     public function find($id) {
         $departamento = Departamento::find($id);
         if(!$departamento) {
