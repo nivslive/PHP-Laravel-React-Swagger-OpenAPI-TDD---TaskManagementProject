@@ -7,9 +7,7 @@ class Funcionario extends Fetch {
         super(path);
         this.path = path;
     }
-    get(): any {
-        return this.get();
-    }
+    
     update(data: any) {
         return this.put('', data);
     }
@@ -18,8 +16,8 @@ class Funcionario extends Fetch {
         return this.delete(`/${id}`);
     }
 
-    all(): FuncionarioState[] | [] {
-        throw new Error("Method not implemented.")
+    async  all() {
+        return await this.get('/all');
     }
 
 

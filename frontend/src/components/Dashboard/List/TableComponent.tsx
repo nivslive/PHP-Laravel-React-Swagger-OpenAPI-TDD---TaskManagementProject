@@ -7,7 +7,7 @@ const Table = () => {
 
     return (
         <>
-            {/**data === 'fornecedor' && <TableComponents.Funcionarios data={data} />  **/}
+            {selector.listName === 'funcionarios' && <TableComponents.Funcionarios /> }
             {selector.listName === 'tarefas' && <TableComponents.Tarefas /> }
             {selector.listName === 'departamentos' && <TableComponents.Departamentos />}
         </>

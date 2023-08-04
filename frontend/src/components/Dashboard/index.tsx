@@ -1,5 +1,5 @@
 // import Button from "./Button";
-import Buttons from "./Buttons";
+import Buttons from "./DispatchStateButtons";
 import Search from "./Search";
 import List from "./List";
 import EditModal from "./EditModal";

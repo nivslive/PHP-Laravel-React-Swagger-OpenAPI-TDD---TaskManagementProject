@@ -11,7 +11,9 @@ use Illuminate\Http\JsonResponse;
 class FuncionarioController extends Controller
 {
 
-    public function all() {}
+    public function all() {
+        return Funcionario::all();
+    }
     public function find($id) {
         $funcionario = Funcionario::find($id);
         if(!$funcionario) {
