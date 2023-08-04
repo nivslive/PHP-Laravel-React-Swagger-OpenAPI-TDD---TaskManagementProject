@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Tarefa;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,6 +13,6 @@ class TarefaSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        Tarefa::factory(100)->create();
     }
 }
