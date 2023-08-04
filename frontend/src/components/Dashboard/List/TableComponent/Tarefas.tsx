@@ -9,7 +9,7 @@ const Tarefas = () => {
     <thead>
                 <tr>
                 <th scope="col">#</th>
-                <th scope="col">Nome</th>
+                <th scope="col">Titulo</th>
                 <th scope="col">Opções</th>
                 </tr>
     </thead>

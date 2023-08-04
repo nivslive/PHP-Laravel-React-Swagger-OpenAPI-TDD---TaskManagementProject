@@ -1,29 +1,34 @@
 import { useSelector } from "react-redux";
-interface Departamento {
-    nome: string;
-}
-interface IDepartamentos {
-    data: Departamento[] | undefined;
-}
-
-const Departamentos = (props: IDepartamentos | undefined) => {
-    if(props === undefined) return <></>;
-    if(props.data === undefined) return <>Não foi possível carregar os dados</>;
-
+import TableComponents from "./index";
+const Departamentos = () => {
+    // let test = [{title: 'test'}, {title: 'testando'}];
+    let list = useSelector((state: any) => state.dashboard.principalList);
+    if(list === undefined) return <></>;
     return (<>
-    {   props.data.map((e) => {
+    <table className="table">
+    <thead>
+                <tr>
+                <th scope="col">#</th>
+                <th scope="col">Titulo</th>
+                <th scope="col">Opções</th>
+                </tr>
+    </thead>
+    {   list.map((e: any, k: number) => {
            return(
            <>
-           <table>
-                <tr>{e.nome}</tr>
-                <tr>oi</tr>
-                <td>oi</td>
-                <td>oi</td>
-            </table>
-           </>)
+            <tbody key={k}>
+                <tr>
+                <th scope="row">{k + 1}</th>
+                <td>{e.name}</td>
+                <td><TableComponents.EditButton id={k}/></td>
+                </tr>
+            </tbody>
+
+           </>
+           )
         })
     }
-
+    </table>
 </>)};
 
 export default Departamentos;

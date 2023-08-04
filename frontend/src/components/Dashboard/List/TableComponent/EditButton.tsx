@@ -6,7 +6,7 @@ const EditButton = (props: any) => {
     function openModal() {
         dispatch(dashboardActions.openModal({id: props.id}));
     }
-    return (<button className={`btn btn-primary`} onClick={openModal}>Editar</button>);
+    return (<button className={`btn btn-primary`} onClick={openModal}>Ver/Editar</button>);
 };
 
 export default EditButton;

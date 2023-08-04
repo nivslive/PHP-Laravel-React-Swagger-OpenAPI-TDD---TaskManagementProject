@@ -1,6 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import { dashboardActions } from "../../store/dashboard-slice";
 import tarefaData from "../../data/Tarefa";
+import { useEffect, useState } from "react";
+import departamentoData from "../../data/Departamento";
 
 const Button = (props: any) => {
     const dispatch = useDispatch();
@@ -24,10 +26,18 @@ const Button = (props: any) => {
                     });
                     break;
                 case 'departamentos':
-                    // departamentoData.all().then((e: any) => {  
-                    //         dispatch(dashboardActions.setListData({listName: selector.listName, data: e.json() === undefined ? [] : e.json()}
-                    //     ));
-                    // });
+                        departamentoData.all().then((response) => {
+                            if (response.status === 200) {
+                                return response.json(); 
+                            } else {
+                                throw new Error("Erro na requisição"); 
+                            }
+                        }).then((data) => {
+                            console.log(data, 'data');
+                            dispatch(dashboardActions.setListData({listName: selector.listName, data}));
+                        }).catch((error) => {
+                            console.error("Erro:", error);
+                        });
                     break;
         }
         

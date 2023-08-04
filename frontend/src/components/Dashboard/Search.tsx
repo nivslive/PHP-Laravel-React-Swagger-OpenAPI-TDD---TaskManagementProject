@@ -15,6 +15,7 @@ const InputSearch = () => {
                 placeholder="Digite para filtrar"
                 value={searchText}
                 onChange={search}
+                onKeyDown={search}
         />
     </>;
 };
