@@ -16,6 +16,7 @@ interface DataState {
     backupList: any,
     editData: any,
     iCanSeeEditModal: boolean,
+    editDataKey: number | null,
     // content: {
     //   funcionarios: FuncionarioState[] | [],
     //   tarefas: TarefaState[] | [] | any,
@@ -29,6 +30,7 @@ const initialState: DataState = {
   principalList: [],
   backupList: [],
   editData: {},
+  editDataKey: null,
   // content: {funcionarios: [], tarefas: [], departamentos: []},
 }
 
@@ -50,7 +52,12 @@ export const dashboardSlice = createSlice({
     },
     openModal: (state, action: PayloadAction<any>) => {
       state.editData = state.principalList[action.payload.id];
+      state.editDataKey = action.payload.id;
       state.iCanSeeEditModal = true;
+    },
+    putEditedDataOnItem: (state, action: PayloadAction<any>) => {
+      if(state.editDataKey === null) throw new Error('não existe essa chave na lista de dados.');
+      state.principalList[state.editDataKey] = action.payload.editedData;
     },
     closeModal: (state) => {
       state.iCanSeeEditModal = false;
