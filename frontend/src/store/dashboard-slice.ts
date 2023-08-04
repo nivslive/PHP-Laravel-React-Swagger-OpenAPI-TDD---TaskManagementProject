@@ -15,6 +15,7 @@ interface DataState {
     principalList: any,
     backupList: any,
     editData: any,
+    iCanSeeEditModal: boolean,
     // content: {
     //   funcionarios: FuncionarioState[] | [],
     //   tarefas: TarefaState[] | [] | any,
@@ -24,6 +25,7 @@ interface DataState {
 
 const initialState: DataState = {
   listName: '',
+  iCanSeeEditModal: false,
   principalList: [],
   backupList: [],
   editData: {},
@@ -48,6 +50,7 @@ export const dashboardSlice = createSlice({
     },
     openModal: (state, action: PayloadAction<any>) => {
       state.editData = state.principalList[action.payload.number];
+      state.iCanSeeEditModal = true;
     },
     // searchByFuncionario: (state, action: PayloadAction<SearchByFuncionarioState>) => {
 
