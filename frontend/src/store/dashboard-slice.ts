@@ -65,6 +65,8 @@ export const dashboardSlice = createSlice({
     searchByWord: (state, action: PayloadAction<any>) => {
       if(state.listName === 'funcionarios') {
         state.principalList = state.backupList.funcionarios;
+        state.principalList = state.principalList.filter((item: any) =>
+        item.first_name.toLowerCase().includes(action.payload.searchText.toLowerCase()));
       }
       if(state.listName === 'tarefas') {
         state.principalList = state.backupList.tarefas;
