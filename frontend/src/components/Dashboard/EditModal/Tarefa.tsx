@@ -71,6 +71,12 @@ const Tarefa = () => {
 
     function sendEditedData(e: any) {
         e.preventDefault();
+        setEditedData((prevData) => ({
+            ...prevData,
+            [e.target.title.name]: e.target.title.value,
+            [e.target.description.name]: e.target.description.value,
+            [e.target.assignee_id.name]: e.target.assignee_id.value,
+        }));
     }
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {

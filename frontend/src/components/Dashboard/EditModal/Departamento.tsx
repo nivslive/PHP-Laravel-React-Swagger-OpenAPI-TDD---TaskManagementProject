@@ -65,6 +65,10 @@ const Departamento = () => {
 
     function sendEditedData(e: any) {
         e.preventDefault();
+        setEditedData((prevData) => ({
+            ...prevData,
+            [e.target.name.name]: e.target.name.value,
+        }));
     }
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
