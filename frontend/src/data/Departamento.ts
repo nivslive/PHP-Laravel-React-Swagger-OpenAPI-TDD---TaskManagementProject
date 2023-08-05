@@ -11,6 +11,9 @@ class Departamento extends Fetch implements IDepartamento {
     // get() {
     //     throw new Error("Method not implemented.");
     // }
+    async update(id: string, content: any) {
+        return await this.put(id, content);
+    }
     show() {
         throw new Error("Method not implemented.");
     }

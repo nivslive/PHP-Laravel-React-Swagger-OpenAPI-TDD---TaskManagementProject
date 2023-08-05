@@ -5,6 +5,7 @@ import Input from "./Input";
 import moment from "moment";
 import { dashboardActions } from "../../../store/dashboard-slice";
 import tarefaData from "../../../data/Tarefa";
+import departamentoData from "../../../data/Departamento";
 
 const style: any = {
    p: {},
@@ -60,7 +61,7 @@ const Departamento = () => {
         console.log("Edited Data on useEffect:", editedData);
         dispatch(dashboardActions.putEditedDataOnItem({editedData}));
         const body = {name: editedData.name};
-        tarefaData.update(`/${editedData.id}`, body);
+        departamentoData.update(`/${editedData.id}`, body);
     }, [editedData]);
 
     function sendEditedData(e: any) {
@@ -86,8 +87,8 @@ const Departamento = () => {
                 <EditModalComponents.CloseButton />
                 <form onSubmit={sendEditedData}>
                 <div style={style.modalContent}>
-                    <h4>Name <br/> <i>{editedData.name}</i></h4>
-                    <Input name="name" label="Edite o titulo:" value={editedData.name} onChange={handleInputChange} />
+                    <h4>Departamento <br/> <i>{editedData.name}</i></h4>
+                    <Input name="name" label="Edite o name:" value={editedData.name} onChange={handleInputChange} />
                     <p> Criado em: {moment(editedData.created_at).format('D/m/Y H:s')}</p>
                     <hr />
                 </div>
