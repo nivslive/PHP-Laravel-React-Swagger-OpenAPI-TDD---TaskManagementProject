@@ -24,10 +24,10 @@ return new class extends Migration
             $table->string("phone")->nullable();
             
             //relationships models
-            $table->unsignedBigInteger('department_id');
+            $table->unsignedBigInteger('department_id')->nullable();
             $table->foreign('department_id')
                 ->references('id')
-                ->on('departamentos');
+                ->on('departamentos')->onDelete('set null');
             
             //default
             $table->timestamps();
