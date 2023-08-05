@@ -4,8 +4,10 @@ import tarefaData from "../../data/Tarefa";
 import { useEffect, useState } from "react";
 import departamentoData from "../../data/Departamento";
 import funcionarioData from "../../data/Funcionario";
+import { errorHandlerActions } from "../../store/error-handler-slice";
 
 const Button = (props: any) => {
+    const [showErrorMessageForUser, setShowErrorMessageForUser] = useState(false);
     const dispatch = useDispatch();
     const selector = useSelector((state: any) => state.dashboard);
     useEffect(() => {
@@ -19,10 +21,10 @@ const Button = (props: any) => {
                         if (response.status === 200) {
                             return response.json(); 
                         } else {
+                            dispatch(errorHandlerActions.setShowErrorHandlerForDBReasonForTrue());
                             throw new Error("Erro na requisição"); 
                         }
                     }).then((data) => {
-                        console.log(data, 'data');
                         dispatch(dashboardActions.setListData({listName: props.name, data}));
                     }).catch((error) => {
                         console.error("Erro:", error);
@@ -41,17 +43,15 @@ const Button = (props: any) => {
                             throw new Error("Erro na requisição"); 
                         }
                     }).then((data) => {
-                        console.log(data, 'data');
                         dispatch(dashboardActions.setListData({listName: props.listName, data}));
                     }).catch((error) => {
-                        console.error("Erro:", error);
+                        dispatch(errorHandlerActions.setShowErrorHandlerForDBReasonForTrue());
                     });
                 }
                 break;
 
                 case 'funcionarios':
                     if(selector.backupList.funcionarios.length !== 0) {
-                        console.log(selector.backupList.funcionarios.length !== 0, selector.backupList.funcionarios.length, 0)
                         dispatch(dashboardActions.setListData({listName: props.name, data: selector.backupList.funcionarios}));
                     } else {
                         funcionarioData.all().then((response) => {

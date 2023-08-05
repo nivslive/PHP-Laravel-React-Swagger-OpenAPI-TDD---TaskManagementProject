@@ -1,13 +1,23 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './Login.styles';
 import authData from '../data/Auth';
+import { useSelector } from 'react-redux';
 
 const Login = () => {
     const [email, setEmail] = useState<any>('');
     const [password, setPassword] = useState<any>('');
+    const authenticated = useSelector((store: any) => store.auth.authenticated);
+    
+    useEffect(() => {
+        if(authenticated) window.location.pathname = '/dashboard';
+    }, []);
 
     const submit = () => {
-        authData.login({email, password});
+        authData.login({email, password}).then((e: any) => {
+            if(localStorage.getItem('bearer-token') === null) {
+                localStorage.setItem('bearer-token', 'Bearer ' + e.json().token);
+            }
+        });
     };
   return (
     <div className="App" style={styles.app}>

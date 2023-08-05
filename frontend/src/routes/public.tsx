@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import Login from "../pages/Login";
+import ErrorPage from "../pages/Error";
 
 const Redirect = () => {
     const auth = useSelector((state: any) => state.auth.authenticated);
@@ -15,6 +16,10 @@ const publicRoutes = [
         path: "/login",
         element: <Login/>,
     },
+    {
+        path: '*',
+        element: <ErrorPage typeError="notfound" />,
+    }
 ];
 
 export default publicRoutes;

@@ -3,12 +3,6 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 interface ChangeListState {
   listName: any,
 }
-// interface SearchByWordState {
-//     word: String,
-// }
-// interface SearchByFuncionarioState {
-//     word: String,
-// }
 
 interface DataState {
     listName: String,
@@ -31,7 +25,6 @@ const initialState: DataState = {
   backupList: {funcionarios: [], tarefas: [], departamentos: [],},
   editData: {},
   editDataKey: null,
-  // content: {funcionarios: [], tarefas: [], departamentos: []},
 }
 
 export const dashboardSlice = createSlice({
@@ -93,7 +86,7 @@ export const dashboardSlice = createSlice({
     closeModal: (state) => {
       state.iCanSeeEditModal = false;
     }, 
-    // searchByFuncionario: (state, action: PayloadAction<SearchByFuncionarioState>) => {
+    // searchByFuncionario: (state, action: PayloadAction<any>) => {
 
     // }
   },

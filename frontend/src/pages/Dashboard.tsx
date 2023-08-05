@@ -3,9 +3,10 @@ import DashboardComponents from "../components/Dashboard/index";
 import { dashboardActions } from "../store/dashboard-slice";
 import tarefaData from "../data/Tarefa";
 import { useEffect, useState } from "react";
+import ErrorPage from "./Error";
 
 const Dashboard = () => {
-    const selector = useSelector((state: any) => state.dashboard);
+    const selector = useSelector((state: any) => state);
     const dispatch = useDispatch();
     function boot() {
         dispatch(dashboardActions.changeList({listName:'tarefas'}));
@@ -16,7 +17,7 @@ const Dashboard = () => {
                 throw new Error("Erro na requisição"); 
             }
         }).then((data) => {
-            dispatch(dashboardActions.setListData({listName: selector.listName, data}));
+            dispatch(dashboardActions.setListData({listName: selector.dashboard.listName, data}));
         }).catch((error) => {
         });
     }
@@ -26,6 +27,12 @@ const Dashboard = () => {
         !(unmountBoot) && boot();
         setUnmountBoot(true);
     }, [unmountBoot]);
+
+    if(selector.error.showErrorHandlerForDBReason) {
+        return (<>
+            <ErrorPage typeError="db"/>
+        </>);
+    }
 
     return (<> 
         <div className={`d-flex p-3`}>
