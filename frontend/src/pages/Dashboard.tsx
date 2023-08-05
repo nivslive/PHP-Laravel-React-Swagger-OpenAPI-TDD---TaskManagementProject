@@ -29,7 +29,8 @@ const Dashboard = () => {
             <DashboardComponents.Buttons/>
             <DashboardComponents.Search/>
         </div>
-        {selector.iCanSeeEditModal && <DashboardComponents.EditModal />}
+
+        {selector.dashboard.iCanSeeEditModal && <DashboardComponents.EditModal />}
         <DashboardComponents.List/>
     </>)
 };
