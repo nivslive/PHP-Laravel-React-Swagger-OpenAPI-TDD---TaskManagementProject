@@ -103,6 +103,6 @@ export const dashboardSlice = createSlice({
   },
 })
 
-export const dashboardActions = dashboardSlice.actions
+export const dashboardActions: any = dashboardSlice.actions
 
 export default dashboardSlice.reducer

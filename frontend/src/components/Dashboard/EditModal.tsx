@@ -40,6 +40,7 @@ const EditModal = () => {
     const selector = useSelector((state:any) => state.dashboard);
     return (
         <>
+        {selector.listName === 'funcionarios' && <EditModalComponents.Funcionario />}
         {selector.listName === 'departamentos' && <EditModalComponents.Departamento />}
         {selector.listName === 'tarefas' && <EditModalComponents.Tarefa />}
         </>

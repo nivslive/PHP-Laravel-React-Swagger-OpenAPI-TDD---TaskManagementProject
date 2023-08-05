@@ -8,8 +8,8 @@ class Funcionario extends Fetch {
         this.path = path;
     }
     
-    update(data: any) {
-        return this.put('', data);
+    async update(id: string, content: any) {
+        return await this.put(id, content);
     }
 
     delete(id: any): any {
