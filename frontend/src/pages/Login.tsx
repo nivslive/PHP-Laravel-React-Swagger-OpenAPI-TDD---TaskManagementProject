@@ -1,7 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './Login.styles';
+import authData from '../data/Auth';
 
 const Login = () => {
+    const [email, setEmail] = useState<any>('');
+    const [password, setPassword] = useState<any>('');
+
+    const submit = () => {
+        authData.login({email, password});
+    };
   return (
     <div className="App" style={styles.app}>
       <div className="login-container" style={styles.loginContainer}>
@@ -13,6 +20,7 @@ const Login = () => {
           <input
             type="email"
             id="email"
+            onChange={setEmail}
             placeholder="Digite seu email"
             style={styles.input}
           />
@@ -23,11 +31,12 @@ const Login = () => {
           <input
             type="password"
             id="password"
+            onChange={setPassword}
             placeholder="Digite sua senha"
             style={styles.input}
           />
 
-          <button type="submit" style={styles.button}>
+          <button onClick={submit} type="submit" style={styles.button}>
             Entrar
           </button>
         </form>
