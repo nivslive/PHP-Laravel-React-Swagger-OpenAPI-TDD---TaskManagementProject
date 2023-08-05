@@ -12,7 +12,7 @@ class TarefaFactory extends Factory
     {
         return [
             'title' => $this->faker->sentence,
-            'description' => $this->faker->paragraph(3),
+            'description' => $this->faker->paragraph(2),
             'due_date' => $this->faker->dateTimeBetween('+1 day', '+1 week'),
             'assignee_id' => function () {
                 return \App\Models\Funcionario::factory()->create()->id;

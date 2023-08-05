@@ -8,7 +8,7 @@ class Auth extends Fetch {
     }
 
     async login(data: Object) {
-        this.post(undefined, data);
+        return await this.post(undefined, data);
     }
 }
 

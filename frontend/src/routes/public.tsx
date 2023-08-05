@@ -16,10 +16,10 @@ const publicRoutes = [
         path: "/login",
         element: <Login/>,
     },
-    {
-        path: '*',
-        element: <ErrorPage typeError="notfound" />,
-    }
+    // {
+    //     path: '*',
+    //     element: <ErrorPage typeError="notfound" />,
+    // }
 ];
 
 export default publicRoutes;

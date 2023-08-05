@@ -10,23 +10,13 @@ const Dashboard = () => {
     const dispatch = useDispatch();
     function boot() {
         dispatch(dashboardActions.changeList({listName:'tarefas'}));
-        tarefaData.all().then((response) => {
-            if (response.status === 200) {
-                return response.json(); 
-            } else {
-                throw new Error("Erro na requisição"); 
-            }
-        }).then((data) => {
-            dispatch(dashboardActions.setListData({listName: selector.dashboard.listName, data}));
-        }).catch((error) => {
-        });
     }
     
     const [unmountBoot, setUnmountBoot] = useState(false);
     useEffect(() => {
         !(unmountBoot) && boot();
         setUnmountBoot(true);
-    }, [unmountBoot]);
+    }, []);
 
     if(selector.error.showErrorHandlerForDBReason) {
         return (<>

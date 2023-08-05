@@ -1,36 +1,105 @@
 import React, { useEffect, useState } from 'react';
 import styles from './Login.styles';
 import authData from '../data/Auth';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { authActions } from '../store/auth-slice';
 
 const Login = () => {
-    const [email, setEmail] = useState<any>('');
-    const [password, setPassword] = useState<any>('');
-    const authenticated = useSelector((store: any) => store.auth.authenticated);
-    
-    useEffect(() => {
-        if(authenticated) window.location.pathname = '/dashboard';
-    }, []);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [responseMessage, setResponseMessage] = useState<any>('');
+  const [typeResponseMessage, setTypeResponseMessage] = useState<any>('success');
+  const [responseMessageBool, setResponseMessageBool] = useState<boolean>(false);
+  const selector = useSelector((store: any) => store);
+  const dispatch = useDispatch();
+  // useEffect(() => {
+  //   if (selector.auth.authenticated) {
+  //     window.location.pathname = '/dashboard';
+  //   }
+  // }, [selector.auth.authenticated]);
 
-    const submit = () => {
-        authData.login({email, password}).then((e: any) => {
-            if(localStorage.getItem('bearer-token') === null) {
-                localStorage.setItem('bearer-token', 'Bearer ' + e.json().token);
-            }
-        });
-    };
+  const submit = async () => {
+    setResponseMessageBool(false);
+    if(email.length === 0) {
+      setResponseMessageBool(true);
+      setTypeResponseMessage('error');
+      setResponseMessage("Você não escreveu nada no email.");
+      return;
+    } else if(password.length === 0) {
+      setResponseMessageBool(true);
+      setTypeResponseMessage('error');
+      setResponseMessage("Você não escreveu nada na senha.");
+      return;
+    } else if(password.length === 0 && email.length === 0) {
+      setResponseMessageBool(true);
+      setTypeResponseMessage('error');
+      setResponseMessage("Você não escreveu nada na senha e no email.");
+      return;
+    }
+    const requestData = { email, password };
+    console.log(email, password);
+    // try {
+      authData.login(requestData).then( async (response: any) => {
+        console.log(response);
+        if(response.status === 401 || response.statusText === "Unauthorized") {
+          setResponseMessageBool(true);
+          setTypeResponseMessage('error');
+          setResponseMessage('Desautorizado. Credenciais incorretas.');
+        }
+
+        if(response.ok) {
+          return await response.json();
+        }
+        // if (localStorage.getItem('bearer-token') === null) {
+        //     localStorage.setItem('bearer-token', 'Bearer ' + response.token);
+        // }
+        // dispatch(authActions.authenticate({ token: response.token }));
+        // console.log(selector.auth.authenticated, 'authenticated')
+        // window.location.pathname = '/dashboard';
+    }).then(async (json) => {
+        if(json && json.message) {
+          setResponseMessageBool(true);
+          setTypeResponseMessage('success');
+          setResponseMessage(await json.message + ' Você será redirecionado para o dashboard..');
+          setTimeout(() => {
+              if (localStorage.getItem('bearer-token') === null) {
+                localStorage.setItem('bearer-token', json.token);
+              }
+              dispatch(authActions.authenticate({ token: json.token }));
+              window.location.pathname = '/dashboard';
+          }, 2000);
+        }
+    });
+    
+  };
+
+  const breakDefaultBehaviorOnSubmit = (e: any) => {
+    e.preventDefault();
+  };
+
+  const setColorResponseMessage = () => {
+    if(typeResponseMessage === 'success') {
+      return 'text-success';
+    }
+    if(typeResponseMessage === 'error') {
+      return 'text-danger';
+    }
+    return '';
+  };
   return (
     <div className="App" style={styles.app}>
       <div className="login-container" style={styles.loginContainer}>
         <h2 style={styles.loginHeader}>Página de Login</h2>
-        <form className="login-form" style={styles.loginForm}>
+        { responseMessageBool && <h6 className={setColorResponseMessage()}>{responseMessage}</h6>}
+        <form onSubmit={breakDefaultBehaviorOnSubmit} className="login-form" style={styles.loginForm}>
           <label htmlFor="email" style={styles.label}>
             Email
           </label>
           <input
             type="email"
             id="email"
-            onChange={setEmail}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             placeholder="Digite seu email"
             style={styles.input}
           />
@@ -41,7 +110,8 @@ const Login = () => {
           <input
             type="password"
             id="password"
-            onChange={setPassword}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             placeholder="Digite sua senha"
             style={styles.input}
           />
@@ -53,6 +123,6 @@ const Login = () => {
       </div>
     </div>
   );
-}
+};
 
 export default Login;

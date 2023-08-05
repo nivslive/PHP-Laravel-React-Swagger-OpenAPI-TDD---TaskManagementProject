@@ -61,7 +61,6 @@ const Button = (props: any) => {
                                 throw new Error("Erro na requisição"); 
                             }
                         }).then((data) => {
-                            console.log(data, 'data');
                             dispatch(dashboardActions.setListData({listName: props.listName, data}));
                         }).catch((error) => {
                             console.error("Erro:", error);
