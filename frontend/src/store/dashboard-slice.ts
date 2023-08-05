@@ -10,6 +10,7 @@ interface DataState {
     backupList: any,
     editData: any,
     iCanSeeEditModal: boolean,
+    iCanSeeCreateModal: boolean,
     editDataKey: number | null,
     // content: {
     //   funcionarios: FuncionarioState[] | [],
@@ -21,6 +22,7 @@ interface DataState {
 const initialState: DataState = {
   listName: '',
   iCanSeeEditModal: false,
+  iCanSeeCreateModal: false,
   principalList: [],
   backupList: {funcionarios: [], tarefas: [], departamentos: [],},
   editData: {},
@@ -74,7 +76,7 @@ export const dashboardSlice = createSlice({
 
 
     },
-    openModal: (state, action: PayloadAction<any>) => {
+    openEditModal: (state, action: PayloadAction<any>) => {
       state.editData = state.principalList[action.payload.id];
       state.editDataKey = action.payload.id;
       state.iCanSeeEditModal = true;
@@ -83,9 +85,18 @@ export const dashboardSlice = createSlice({
       if(state.editDataKey === null) throw new Error('não existe essa chave na lista de dados.');
       state.principalList[state.editDataKey] = action.payload.editedData;
     },
-    closeModal: (state) => {
+    closeEditModal: (state) => {
       state.iCanSeeEditModal = false;
     }, 
+
+    
+    openCreateModal: (state) => {
+      state.iCanSeeCreateModal = true;
+    },
+    closeCreateModal: (state) => {
+      state.iCanSeeCreateModal = false;
+    }, 
+
     deleteItem: (state, action: PayloadAction<number>) => {
       const indexToDelete = action.payload;
       console.log(indexToDelete);
@@ -97,6 +108,23 @@ export const dashboardSlice = createSlice({
         }
       }
     },
+    putCreatedData(state, action: PayloadAction<any>) {
+      // Update both backupList and principalList
+      if (state.listName === 'departamentos') {
+        state.backupList.departamentos.push(action.payload);
+        state.principalList = state.backupList.departamentos;
+      } else if (state.listName === 'tarefas') {
+        state.backupList.tarefas.push(action.payload);
+        state.principalList = state.backupList.tarefas;
+      } else if (state.listName === 'funcionarios') {
+        state.backupList.funcionarios.push(action.payload);
+        state.principalList = state.backupList.funcionarios;
+      } else if (state.listName === 'outraLista') {
+        state.backupList.outraLista.push(action.payload);
+        state.principalList = state.backupList.outraLista;
+      }
+    }
+    
     // searchByFuncionario: (state, action: PayloadAction<any>) => {
 
     // }

@@ -1,25 +1,25 @@
-import { FuncionarioState } from "../store/interfaces";
 import Fetch from "./Fetch";
-import { IDepartamento } from "./Interfaces";
+import { IData } from "./Interfaces";
 
-class Departamento extends Fetch implements IDepartamento {
+class Departamento extends Fetch implements IData {
     path: string;
     constructor(path: string) {
         super(path);
         this.path = path;
     }
-    // get() {
-    //     throw new Error("Method not implemented.");
-    // }
+
+    async create(content: any) {
+        return await this.post(undefined, content);
+    }
+
+    delete(id: any): any {
+        return this.delete(`/${id}`);
+    }
+
     async update(id: string, content: any) {
         return await this.put(id, content);
     }
-    show() {
-        throw new Error("Method not implemented.");
-    }
-    // delete() {
-    //     throw new Error("Method not implemented.");
-    // }
+
     async  all() {
         return await this.get('/all');
     }

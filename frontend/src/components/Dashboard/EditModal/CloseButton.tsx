@@ -16,7 +16,7 @@ const styles: any = {
 const CloseButton = () => {
     const dispatch = useDispatch();
     function closeModal() {
-        dispatch(dashboardActions.closeModal());
+        dispatch(dashboardActions.closeEditModal());
     }
     return (<>
             <button 

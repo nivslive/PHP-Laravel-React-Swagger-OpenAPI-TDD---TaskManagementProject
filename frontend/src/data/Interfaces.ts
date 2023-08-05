@@ -1,26 +1,15 @@
 interface IData {
     path: string;
-}
-interface IFuncionario extends IData {
+    create(content: any): any;
+    update(id: string, content: any): any;
+    delete(id: string): any;
     all(): any;
-    get(): any;
-    show(): any;
-    delete(): any;
 }
+// interface IFuncionario extends IData {}
 
-interface ITarefa extends IData {
-    all(): any;
-    get(): any;
-    show(): any;
-    delete(): any;
-}
+// interface ITarefa extends IData {}
 
-interface IDepartamento extends IData {
-    all(): any;
-    get(): any;
-    show(): any;
-    delete(): any;
-}
+// interface IDepartamento extends IData {}
 
 
-export type {IFuncionario, ITarefa, IDepartamento};
+export type {IData};
