@@ -33,10 +33,13 @@ export const dashboardSlice = createSlice({
   name: 'dashboard',
   initialState,
   reducers: {
+    // CONFORME AQUI MUDA, TODO DASHBOARD MUDARÁ
     changeList: (state, action: PayloadAction<ChangeListState>) => {
       state.listName = action.payload.listName;
       if(state.iCanSeeEditModal) state.iCanSeeEditModal = false;
     },
+
+    // AQUI SETA A LISTA SELECIONADA DO BACKUP PRA A PILHA PRINCIPAL
     setListData(state, action: PayloadAction<any>) {      
       
       // prepare backups
@@ -76,6 +79,8 @@ export const dashboardSlice = createSlice({
 
 
     },
+
+    //EDIT RULES
     openEditModal: (state, action: PayloadAction<any>) => {
       state.editData = state.principalList[action.payload.id];
       state.editDataKey = action.payload.id;
@@ -90,13 +95,7 @@ export const dashboardSlice = createSlice({
     }, 
 
     
-    openCreateModal: (state) => {
-      state.iCanSeeCreateModal = true;
-    },
-    closeCreateModal: (state) => {
-      state.iCanSeeCreateModal = false;
-    }, 
-
+    //DELETE RULES
     deleteItem: (state, action: PayloadAction<number>) => {
       const indexToDelete = action.payload;
       console.log(indexToDelete);
@@ -108,6 +107,14 @@ export const dashboardSlice = createSlice({
         }
       }
     },
+
+    //CREATE RULES
+    openCreateModal: (state) => {
+      state.iCanSeeCreateModal = true;
+    },
+    closeCreateModal: (state) => {
+      state.iCanSeeCreateModal = false;
+    }, 
     putCreatedData(state, action: PayloadAction<any>) {
       // Update both backupList and principalList
       if (state.listName === 'departamentos') {
