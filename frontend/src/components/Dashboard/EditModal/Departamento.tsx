@@ -36,10 +36,7 @@ const style: any = {
 
 interface EditDataState {
     id: number,
-    title: string,
-    description: string,
-    assignee_id: number,
-    due_date: string,
+    name: string,
     created_at: string,
     updated_at: string,
 }
@@ -47,17 +44,14 @@ interface DashboardState {
     dashboard: { editData: EditDataState,},
 }
 
-const Tarefa = () => {
+const Departamento = () => {
     const selector = useSelector((state:DashboardState) => state.dashboard);
     const dispatch = useDispatch();
 
     
     const [editedData, setEditedData] = useState<EditDataState>({
         id: selector.editData.id,
-        title: selector.editData.title,
-        description: selector.editData.description,
-        assignee_id: selector.editData.assignee_id,
-        due_date: selector.editData.due_date,
+        name: selector.editData.name,
         created_at: selector.editData.created_at,
         updated_at: selector.editData.updated_at
     });
@@ -65,7 +59,7 @@ const Tarefa = () => {
     useEffect(() => {
         console.log("Edited Data on useEffect:", editedData);
         dispatch(dashboardActions.putEditedDataOnItem({editedData}));
-        const body = {title: editedData.title, description: editedData.description};
+        const body = {name: editedData.name};
         tarefaData.update(`/${editedData.id}`, body);
     }, [editedData]);
 
@@ -88,12 +82,8 @@ const Tarefa = () => {
                 <EditModalComponents.CloseButton />
                 <form onSubmit={sendEditedData}>
                 <div style={style.modalContent}>
-                    <h4>Titulo <br/> <i>{editedData.title}</i></h4>
-                    <Input name="title" label="Edite o titulo:" value={editedData.title} onChange={handleInputChange} />
-                    <h4>Description</h4>
-                    <i><p style={style.p}>{editedData.description}</p></i>
-                    <Input name="description" label="Edite a description:" value={editedData.description} onChange={handleInputChange} />
-                    <Input name="assignee_id" label="Assignee Id" value={editedData.assignee_id} onChange={handleInputChange} />
+                    <h4>Name <br/> <i>{editedData.name}</i></h4>
+                    <Input name="name" label="Edite o titulo:" value={editedData.name} onChange={handleInputChange} />
                     <p> Criado em: {moment(editedData.created_at).format('D/m/Y H:s')}</p>
                     <hr />
                 </div>
@@ -104,4 +94,4 @@ const Tarefa = () => {
     );
 };
 
-export default Tarefa;
+export default Departamento;

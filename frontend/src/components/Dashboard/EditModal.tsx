@@ -38,9 +38,9 @@ import EditModalComponents from "./EditModal/index";
 
 const EditModal = () => {
     const selector = useSelector((state:any) => state.dashboard);
-    const dispatch = useDispatch();
     return (
         <>
+        {selector.listName === 'departamentos' && <EditModalComponents.Departamento />}
         {selector.listName === 'tarefas' && <EditModalComponents.Tarefa />}
         </>
     );
