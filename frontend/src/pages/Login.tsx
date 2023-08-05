@@ -50,21 +50,13 @@ const Login = () => {
         if(response.ok) {
           return await response.json();
         }
-        // if (localStorage.getItem('bearer-token') === null) {
-        //     localStorage.setItem('bearer-token', 'Bearer ' + response.token);
-        // }
-        // dispatch(authActions.authenticate({ token: response.token }));
-        // console.log(selector.auth.authenticated, 'authenticated')
-        // window.location.pathname = '/dashboard';
     }).then(async (json) => {
         if(json && json.message) {
           setResponseMessageBool(true);
           setTypeResponseMessage('success');
           setResponseMessage(await json.message + ' Você será redirecionado para o dashboard..');
           setTimeout(() => {
-              if (localStorage.getItem('bearer-token') === null) {
-                localStorage.setItem('bearer-token', json.token);
-              }
+              localStorage.setItem('bearer-token', json.token);
               dispatch(authActions.authenticate({ token: json.token }));
               window.location.pathname = '/dashboard';
           }, 2000);

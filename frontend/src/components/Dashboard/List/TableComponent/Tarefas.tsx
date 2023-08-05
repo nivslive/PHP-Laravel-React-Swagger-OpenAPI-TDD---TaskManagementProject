@@ -8,10 +8,7 @@ const Tarefas = () => {
     let list = useSelector((state: any) => state.dashboard.principalList);
     if(list === undefined) return <></>;
 
-    const handleDelete = (idOnDBToDelete: any, indexToDelete: any) => {
-        tarefaData.delete(`/${idOnDBToDelete}`);
-        dispatch(dashboardActions.deleteItem(indexToDelete));
-    };
+
     return (<>
     <table className="table">
     <thead>
@@ -29,7 +26,7 @@ const Tarefas = () => {
                 <th scope="row">{k + 1}</th>
                 <td>{e.title}</td>
                 <td>
-                    <button onClick={() => handleDelete(e.id, k)} className="btn btn-danger me-2"> Deletar </button>
+                    <TableComponents.DeleteButton dbId={e.id} stateKey={k} />
                     <TableComponents.EditButton id={k}/>
                 </td>
                 </tr>

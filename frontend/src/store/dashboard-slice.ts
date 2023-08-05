@@ -88,6 +88,7 @@ export const dashboardSlice = createSlice({
     }, 
     deleteItem: (state, action: PayloadAction<number>) => {
       const indexToDelete = action.payload;
+      console.log(indexToDelete);
       if (indexToDelete >= 0 && indexToDelete < state.principalList.length) {
         state.principalList.splice(indexToDelete, 1);
         if (state.editDataKey === indexToDelete) {

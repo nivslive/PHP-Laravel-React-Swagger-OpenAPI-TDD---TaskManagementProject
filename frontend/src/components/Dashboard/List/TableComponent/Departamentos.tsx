@@ -21,7 +21,10 @@ const Departamentos = () => {
                 <tr>
                 <th scope="row">{k + 1}</th>
                 <td>{e.name}</td>
-                <td><TableComponents.EditButton id={k}/></td>
+                <td>
+                    <TableComponents.DeleteButton dbId={e.id} stateKey={k} />
+                    <TableComponents.EditButton id={k}/>
+                </td>
                 </tr>
             </tbody>
 
