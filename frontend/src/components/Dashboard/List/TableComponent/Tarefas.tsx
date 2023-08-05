@@ -1,9 +1,17 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import TableComponents from "./index";
+import { dashboardActions } from "../../../../store/dashboard-slice";
+import tarefaData from "../../../../data/Tarefa";
 const Tarefas = () => {
+    const dispatch = useDispatch();
     // let test = [{title: 'test'}, {title: 'testando'}];
     let list = useSelector((state: any) => state.dashboard.principalList);
     if(list === undefined) return <></>;
+
+    const handleDelete = (idOnDBToDelete: any, indexToDelete: any) => {
+        tarefaData.delete(`/${idOnDBToDelete}`);
+        dispatch(dashboardActions.deleteItem(indexToDelete));
+    };
     return (<>
     <table className="table">
     <thead>
@@ -20,7 +28,10 @@ const Tarefas = () => {
                 <tr>
                 <th scope="row">{k + 1}</th>
                 <td>{e.title}</td>
-                <td><TableComponents.EditButton id={k}/></td>
+                <td>
+                    <button onClick={() => handleDelete(e.id, k)} className="btn btn-danger me-2"> Deletar </button>
+                    <TableComponents.EditButton id={k}/>
+                </td>
                 </tr>
             </tbody>
 

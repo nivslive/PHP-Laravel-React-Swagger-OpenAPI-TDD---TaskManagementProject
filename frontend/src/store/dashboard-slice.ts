@@ -86,6 +86,16 @@ export const dashboardSlice = createSlice({
     closeModal: (state) => {
       state.iCanSeeEditModal = false;
     }, 
+    deleteItem: (state, action: PayloadAction<number>) => {
+      const indexToDelete = action.payload;
+      if (indexToDelete >= 0 && indexToDelete < state.principalList.length) {
+        state.principalList.splice(indexToDelete, 1);
+        if (state.editDataKey === indexToDelete) {
+          state.iCanSeeEditModal = false;
+          state.editDataKey = null;
+        }
+      }
+    },
     // searchByFuncionario: (state, action: PayloadAction<any>) => {
 
     // }
