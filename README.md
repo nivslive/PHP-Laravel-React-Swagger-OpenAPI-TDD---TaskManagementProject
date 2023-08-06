@@ -50,8 +50,4 @@ Utilize as seguintes credenciais para realizar testes de login:
 |------------------|-------------|
 | admin@admin.com  | password    |
 
-Certifique-se de que os servidores frontend e backend estão em execução ao realizar os testes.
-
 ---
-
-**Observação:** Certifique-se de ter as versões corretas do Node.js, npm, PHP e Composer instaladas em sua máquina antes de executar os comandos acima.
