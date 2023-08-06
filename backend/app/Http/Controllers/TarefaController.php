@@ -12,12 +12,26 @@ class TarefaController extends Controller
     /**
      * @OA\Post(
      *      path="/tarefas",
+     *      summary="Cria uma nova tarefa",
+     *      @OA\RequestBody(
+     *          required=true,
+     *          @OA\JsonContent(ref="#/components/schemas/Tarefa"),
+     *      ),
      *      @OA\Response(
      *          response=200,
-     *          description="Tarefas returned successfully!",
+     *          description="Tarefa criada com sucesso!",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="message", type="string", example="Tarefa criada com sucesso."),
+     *              @OA\Property(property="data", ref="#/components/schemas/Tarefa"),
+     *          ),
      *      ),
-     *     @OA\PathItem (
-     *     ),
+     *      @OA\Response(
+     *          response=500,
+     *          description="Não foi possível criar a tarefa",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="message", type="string", example="Não foi possível criar a tarefa."),
+     *          ),
+     *      ),
      * )
      */
     public function create(CreateTarefaRequest $request)
@@ -35,6 +49,7 @@ class TarefaController extends Controller
     /**
      * @OA\Get(
      *      path="/tarefas/{tarefa_id}",
+     *      summary="Retorna os detalhes de uma tarefa",
      *      @OA\Parameter(
      *          name="tarefa_id",
      *          description="ID da tarefa",
@@ -44,7 +59,18 @@ class TarefaController extends Controller
      *      ),
      *      @OA\Response(
      *          response=200,
-     *          description="Tarefas returned successfully!",
+     *          description="Detalhes da tarefa retornados com sucesso",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="message", type="string", example="Sucesso ao encontrar a tarefa."),
+     *              @OA\Property(property="data", ref="#/components/schemas/Tarefa"),
+     *          ),
+     *      ),
+     *      @OA\Response(
+     *          response=500,
+     *          description="Não existe essa tarefa",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="message", type="string", example="Não existe essa tarefa."),
+     *          ),
      *      ),
      * )
      */
@@ -63,12 +89,15 @@ class TarefaController extends Controller
     /**
      * @OA\Get(
      *      path="/tarefas/all",
+     *      summary="Retorna todas as tarefas",
      *      @OA\Response(
      *          response=200,
-     *          description="Tarefas returned successfully!",
+     *          description="Lista de todas as tarefas retornada com sucesso",
+     *          @OA\JsonContent(
+     *              type="array",
+     *              @OA\Items(ref="#/components/schemas/Tarefa"),
+     *          ),
      *      ),
-     *     @OA\PathItem (
-     *     ),
      * )
      */
     public function all() {
@@ -76,14 +105,35 @@ class TarefaController extends Controller
     }
 
     /**
-     * @OA\Get(
-     *      path="/api/tarefas/edit/{id}",
+     * @OA\Put(
+     *      path="/tarefas/{id}",
+     *      summary="Atualiza os detalhes de uma tarefa",
+     *      @OA\Parameter(
+     *          name="id",
+     *          description="ID da tarefa",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(type="integer")
+     *      ),
+     *      @OA\RequestBody(
+     *          required=true,
+     *          @OA\JsonContent(ref="#/components/schemas/Tarefa"),
+     *      ),
      *      @OA\Response(
      *          response=200,
-     *          description="Tarefa edited successfully!",
+     *          description="Tarefa atualizada com sucesso",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="message", type="string", example="Tarefa atualizada com sucesso."),
+     *              @OA\Property(property="data", ref="#/components/schemas/Tarefa"),
+     *          ),
      *      ),
-     *     @OA\PathItem (
-     *     ),
+     *      @OA\Response(
+     *          response=500,
+     *          description="Não existe essa tarefa",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="message", type="string", example="Não existe essa tarefa."),
+     *          ),
+     *      ),
      * )
      */
     public function update(UpdateTarefaRequest $request, int $id): JsonResponse
@@ -98,14 +148,30 @@ class TarefaController extends Controller
     }
 
    /**
-     * @OA\Get(
-     *      path="/api/tarefas",
+     * @OA\Delete(
+     *      path="/tarefas/{id}",
+     *      summary="Deleta uma tarefa",
+     *      @OA\Parameter(
+     *          name="id",
+     *          description="ID da tarefa",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(type="integer")
+     *      ),
      *      @OA\Response(
      *          response=200,
-     *          description="Tarefas returned successfully!",
+     *          description="Tarefa deletada com sucesso",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="message", type="string", example="Tarefa apagada com sucesso."),
+     *          ),
      *      ),
-     *     @OA\PathItem (
-     *     ),
+     *      @OA\Response(
+     *          response=500,
+     *          description="Não existe essa tarefa",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="message", type="string", example="Não existe essa tarefa."),
+     *          ),
+     *      ),
      * )
      */
     public function delete($id)

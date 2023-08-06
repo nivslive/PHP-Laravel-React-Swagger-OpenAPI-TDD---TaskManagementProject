@@ -6,13 +6,41 @@ use App\User;
 use Illuminate\Support\Facades\Hash;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
+use OpenApi\Annotations as OA;
+
 class AuthController extends Controller
 {
-    // public function __construct()
-    // {
-    //     $this->middleware('guest');
-    // }
-
+    /**
+     * Efetua o login do usuário.
+     *
+     * @OA\Post(
+     *     path="/login",
+     *     summary="Efetua o login do usuário",
+     *     tags={"Autenticação"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             @OA\Property(property="email", type="string", example="user@example.com"),
+     *             @OA\Property(property="password", type="string", example="password"),
+     *         ),
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Login realizado com sucesso",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Logado com sucesso!"),
+     *             @OA\Property(property="token", type="string", example="token_here"),
+     *         ),
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Credenciais inválidas ou dados não cadastrados",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Credenciais inválidas ou dados não cadastrados."),
+     *         ),
+     *     ),
+     * )
+     */
     public function login(LoginRequest $request)
     {
         $user = \App\Models\User::where('email', $request->email)->first();
