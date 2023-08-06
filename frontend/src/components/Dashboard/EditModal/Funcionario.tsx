@@ -66,7 +66,6 @@ const Funcionario = () => {
     });
 
     useEffect(() => {
-        console.log("Edited Data on useEffect:", editedData);
         dispatch(dashboardActions.putEditedDataOnItem({editedData}));
         const body = {first_name: editedData.first_name, last_name: editedData.last_name, phone: editedData.phone, email: editedData.email, department_id: editedData.department_id};
         funcionarioData.update(`/${editedData.id}`, body);
@@ -86,7 +85,6 @@ const Funcionario = () => {
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
-        console.log(event.target, 'target');
         setEditedData((prevData) => ({
             ...prevData,
             [name]: value

@@ -4,7 +4,6 @@ const Departamentos = () => {
     // let test = [{title: 'test'}, {title: 'testando'}];
     let list = useSelector((state: any) => state.dashboard.principalList);
     if(list === undefined) return <></>;
-    console.log(list, 'list');
     return (<>
     <table className="table">
     <thead>

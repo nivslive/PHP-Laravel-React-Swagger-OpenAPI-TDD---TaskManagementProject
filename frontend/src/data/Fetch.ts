@@ -21,7 +21,6 @@ export default class Fetch {
 
     async get(aditionalPath?: string | undefined): Promise<Response> {
         const path = this.urlPath + (aditionalPath === undefined ? '' : aditionalPath);
-        console.log(path);
         return await fetch(path, {headers: this.headers});
     }
     post(aditionalPath?: string | undefined, content?: any | undefined) {

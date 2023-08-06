@@ -41,7 +41,6 @@ const Tarefa = () => {
     
       const sendCreatedData = (e: any) => {
         e.preventDefault();
-        console.log(data); 
         tarefaData.create(data).then((e:any) => {
             dispatch(dashboardActions.closeCreateModal());
             dispatch(dashboardActions.putCreatedData(data));

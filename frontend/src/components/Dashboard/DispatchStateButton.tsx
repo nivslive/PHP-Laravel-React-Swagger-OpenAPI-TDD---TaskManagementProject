@@ -14,7 +14,6 @@ const Button = (props: any) => {
         switch(selector.listName) {
             case 'tarefas':
                 if(selector.backupList.tarefas.length !== 0) {
-                    console.log(selector.backupList.tarefas.length !== 0, selector.backupList.tarefas.length, 0)
                     dispatch(dashboardActions.setListData({listName: selector.listName, data: selector.backupList.tarefas}));
                 } else {
                     tarefaData.all().then((response) => {
@@ -33,7 +32,6 @@ const Button = (props: any) => {
                 break;
             case 'departamentos':
                 if(selector.backupList.departamentos.length !== 0) {
-                    console.log(selector.backupList.departamentos.length !== 0, selector.backupList.tarefas.length, 0)
                     dispatch(dashboardActions.setListData({listName: props.name, data: selector.backupList.departamentos}));
                 } else {
                     departamentoData.all().then((response) => {

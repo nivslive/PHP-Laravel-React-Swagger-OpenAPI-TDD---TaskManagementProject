@@ -41,7 +41,6 @@ const style: any = {
  
    const sendCreatedData = (e: any) => {
      e.preventDefault();
-     console.log(data); 
      departamentoData.create(data).then((e: any) => {
         dispatch(dashboardActions.closeCreateModal());
         dispatch(dashboardActions.putCreatedData(data));

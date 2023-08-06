@@ -37,10 +37,8 @@ const Login = () => {
       return;
     }
     const requestData = { email, password };
-    console.log(email, password);
     // try {
       authData.login(requestData).then( async (response: any) => {
-        console.log(response);
         if(response.status === 401 || response.statusText === "Unauthorized") {
           setResponseMessageBool(true);
           setTypeResponseMessage('error');

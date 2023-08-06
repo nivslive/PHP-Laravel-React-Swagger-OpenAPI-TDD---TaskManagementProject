@@ -63,7 +63,6 @@ const Tarefa = () => {
     });
 
     useEffect(() => {
-        console.log("Edited Data on useEffect:", editedData);
         dispatch(dashboardActions.putEditedDataOnItem({editedData}));
         const body = {title: editedData.title, description: editedData.description};
         tarefaData.update(`/${editedData.id}`, body);
@@ -81,7 +80,6 @@ const Tarefa = () => {
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
-        console.log(event.target, 'target');
         setEditedData((prevData) => ({
             ...prevData,
             [name]: value
