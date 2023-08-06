@@ -14,22 +14,1013 @@
         }
     ],
     "paths": {
-        "/api/tarefas": {
-            "get": {
-                "operationId": "78610a946743bf42d67599e1c7be6c9d",
+        "/login": {
+            "post": {
+                "tags": [
+                    "Autenticação"
+                ],
+                "summary": "Efetua o login do usuário",
+                "description": "Efetua o login do usuário.",
+                "operationId": "2dd578ff7aba2721293dac66833b27d1",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "example": "user@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "password"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
-                        "description": "Tarefas returned successfully!"
+                        "description": "Login realizado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Logado com sucesso!"
+                                        },
+                                        "token": {
+                                            "type": "string",
+                                            "example": "token_here"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Credenciais inválidas ou dados não cadastrados",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Credenciais inválidas ou dados não cadastrados."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
             }
         },
-        "/api/tarefas/edit/{id}": {
+        "/departamentos": {
             "get": {
-                "operationId": "0de5ad5fc9a0b835b39710ff69c8e112",
+                "tags": [
+                    "Departamentos"
+                ],
+                "summary": "Retorna todos os departamentos",
+                "description": "Retorna todos os departamentos.",
+                "operationId": "b7fd0e88abf05b8d9b60031726965775",
                 "responses": {
                     "200": {
-                        "description": "Tarefa edited successfully!"
+                        "description": "Lista de todos os departamentos",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "description": "ID do departamento",
+                                                "type": "integer"
+                                            },
+                                            "nome": {
+                                                "description": "Nome do departamento",
+                                                "type": "string"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Departamentos"
+                ],
+                "summary": "Cria um novo departamento",
+                "description": "Cria um novo departamento.",
+                "operationId": "bf3cf7b619b05facaed942023a3b1461",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "nome": {
+                                        "type": "string",
+                                        "example": "Nome do Departamento"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Departamento criado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Departamento criado com sucesso."
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "example": "{'nome': 'Nome do Departamento'}"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Não foi possível criar um departamento",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Não foi possível criar um departamento."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/departamentos/{id}": {
+            "get": {
+                "tags": [
+                    "Departamentos"
+                ],
+                "summary": "Retorna os detalhes de um departamento",
+                "description": "Retorna os detalhes de um departamento.",
+                "operationId": "24590c6356aa32749f547ecbd4304e6d",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do departamento",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Detalhes do departamento",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Departamento editado com sucesso."
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Não foi possível achar um departamento",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Não foi possível achar um departamento."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Departamentos"
+                ],
+                "summary": "Atualiza os detalhes de um departamento",
+                "description": "Atualiza os detalhes de um departamento.",
+                "operationId": "3bbe631b13b9bb04bb5304c57164b578",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do departamento",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "id": {
+                                        "type": "number",
+                                        "example": "1"
+                                    },
+                                    "nome": {
+                                        "type": "string",
+                                        "example": "Nome do Departamento"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Departamento editado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Departamento editado com sucesso."
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Não foi possível achar um departamento",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Não foi possível achar um departamento."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Departamentos"
+                ],
+                "summary": "Deleta um departamento",
+                "description": "Deleta um departamento.",
+                "operationId": "dc918a0a43bab951e2d446343f432722",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do departamento",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Departamento deletado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Departamento apagado com sucesso."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Não existe esse departamento",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Não existe esse departamento."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/funcionarios": {
+            "get": {
+                "tags": [
+                    "Funcionários"
+                ],
+                "summary": "Retorna todos os funcionários",
+                "description": "Retorna todos os funcionários.",
+                "operationId": "99ee1d05dd0c8aec9722575e1b2fff7b",
+                "responses": {
+                    "200": {
+                        "description": "Lista de todos os funcionários",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "description": "ID do funcionário",
+                                                "type": "integer"
+                                            },
+                                            "first_name": {
+                                                "description": "Primeiro nome do funcionário",
+                                                "type": "string"
+                                            },
+                                            "last_name": {
+                                                "description": "Último nome do funcionário",
+                                                "type": "string"
+                                            },
+                                            "email": {
+                                                "description": "Email do funcionário",
+                                                "type": "string"
+                                            },
+                                            "phone": {
+                                                "description": "Telefone do funcionário",
+                                                "type": "string"
+                                            },
+                                            "department_id": {
+                                                "description": "ID do departamento associado ao funcionário",
+                                                "type": "integer"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Funcionários"
+                ],
+                "summary": "Cria um novo funcionário",
+                "description": "Cria um novo funcionário.",
+                "operationId": "b1108a5e16c2dde161c7ab7696e5e00f",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "first_name": {
+                                        "description": "Primeiro nome do funcionário",
+                                        "type": "string",
+                                        "example": "João"
+                                    },
+                                    "last_name": {
+                                        "description": "Sobrenome do funcionário",
+                                        "type": "string",
+                                        "example": "da Silva"
+                                    },
+                                    "email": {
+                                        "description": "Email do funcionário",
+                                        "type": "string",
+                                        "example": "joao@example.com"
+                                    },
+                                    "phone": {
+                                        "description": "Telefone do funcionário",
+                                        "type": "string",
+                                        "example": "1234567890"
+                                    },
+                                    "department_id": {
+                                        "description": "ID do departamento associado ao funcionário",
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Funcionário criado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Funcionário criado com sucesso."
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Não foi possível criar um funcionário",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Não foi possível criar um funcionário."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/funcionarios/{id}": {
+            "get": {
+                "tags": [
+                    "Funcionários"
+                ],
+                "summary": "Retorna os detalhes de um funcionário",
+                "description": "Retorna os detalhes de um funcionário.",
+                "operationId": "00ad3abbded28446b05d290c30194baf",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do funcionário",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Detalhes do funcionário",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Funcionário editado com sucesso."
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Não foi possível achar um funcionário",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Não foi possível achar um funcionário."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Funcionários"
+                ],
+                "summary": "Atualiza os detalhes de um funcionário",
+                "description": "Atualiza os detalhes de um funcionário.",
+                "operationId": "f63d5de03f2df2d180947af82b78c4d5",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do funcionário",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "first_name": {
+                                        "description": "Primeiro nome do funcionário",
+                                        "type": "string",
+                                        "example": "João"
+                                    },
+                                    "last_name": {
+                                        "description": "Sobrenome do funcionário",
+                                        "type": "string",
+                                        "example": "da Silva"
+                                    },
+                                    "email": {
+                                        "description": "Email do funcionário",
+                                        "type": "string",
+                                        "example": "joao@example.com"
+                                    },
+                                    "phone": {
+                                        "description": "Telefone do funcionário",
+                                        "type": "string",
+                                        "example": "1234567890"
+                                    },
+                                    "department_id": {
+                                        "description": "ID do departamento associado ao funcionário",
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Funcionário editado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Funcionário editado com sucesso."
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Não foi possível achar um funcionário",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Não foi possível achar um funcionário."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Funcionários"
+                ],
+                "summary": "Deleta um funcionário",
+                "description": "Deleta um funcionário.",
+                "operationId": "893019643377c16665fbf66448bc4045",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do funcionário",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Funcionário deletado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Funcionário apagado com sucesso."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Não existe esse funcionário",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Não existe esse funcionário."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/tarefas": {
+            "post": {
+                "tags": [
+                    "Tarefas"
+                ],
+                "summary": "Cria uma nova tarefa",
+                "operationId": "426e93026eea745cb2168c27377a5b7c",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "title": {
+                                        "description": "Título da tarefa",
+                                        "type": "string",
+                                        "example": "Tarefa 1"
+                                    },
+                                    "description": {
+                                        "description": "Descrição da tarefa",
+                                        "type": "string",
+                                        "example": "Descrição da tarefa"
+                                    },
+                                    "due_date": {
+                                        "description": "Data de vencimento da tarefa",
+                                        "type": "string",
+                                        "format": "date-time",
+                                        "example": "2023-08-10 15:00:00"
+                                    },
+                                    "assignee_id": {
+                                        "description": "ID do funcionário atribuído à tarefa",
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Tarefa criada com sucesso!",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Tarefa criada com sucesso."
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Não foi possível criar a tarefa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Não foi possível criar a tarefa."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/tarefas/{tarefa_id}": {
+            "get": {
+                "tags": [
+                    "Tarefas"
+                ],
+                "summary": "Retorna os detalhes de uma tarefa",
+                "operationId": "53729c3b0b27909708634989292e2d04",
+                "parameters": [
+                    {
+                        "name": "tarefa_id",
+                        "in": "path",
+                        "description": "ID da tarefa",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Detalhes da tarefa retornados com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Sucesso ao encontrar a tarefa."
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Não existe essa tarefa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Não existe essa tarefa."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/tarefas/all": {
+            "get": {
+                "tags": [
+                    "Tarefas"
+                ],
+                "summary": "Retorna todas as tarefas",
+                "operationId": "722035725541f30c64eaa7b80bf474c0",
+                "responses": {
+                    "200": {
+                        "description": "Lista de todas as tarefas retornada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "title": {
+                                                "description": "Título da tarefa",
+                                                "type": "string",
+                                                "example": "Tarefa 1"
+                                            },
+                                            "description": {
+                                                "description": "Descrição da tarefa",
+                                                "type": "string",
+                                                "example": "Descrição da tarefa"
+                                            },
+                                            "due_date": {
+                                                "description": "Data de vencimento da tarefa",
+                                                "type": "string",
+                                                "format": "date-time",
+                                                "example": "2023-08-10 15:00:00"
+                                            },
+                                            "assignee_id": {
+                                                "description": "ID do funcionário atribuído à tarefa",
+                                                "type": "integer",
+                                                "example": 1
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/tarefas/{id}": {
+            "put": {
+                "tags": [
+                    "Tarefas"
+                ],
+                "summary": "Atualiza os detalhes de uma tarefa",
+                "operationId": "70170496b19147355ad48a6ae82a0730",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID da tarefa",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "title": {
+                                        "description": "Título da tarefa",
+                                        "type": "string",
+                                        "example": "Tarefa 1"
+                                    },
+                                    "description": {
+                                        "description": "Descrição da tarefa",
+                                        "type": "string",
+                                        "example": "Descrição da tarefa"
+                                    },
+                                    "due_date": {
+                                        "description": "Data de vencimento da tarefa",
+                                        "type": "string",
+                                        "format": "date-time",
+                                        "example": "2023-08-10 15:00:00"
+                                    },
+                                    "assignee_id": {
+                                        "description": "ID do funcionário atribuído à tarefa",
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Tarefa atualizada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Tarefa atualizada com sucesso."
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Não existe essa tarefa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Não existe essa tarefa."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Deleta uma tarefa",
+                "operationId": "e0fdf91bbed535a3fbd5bfa06aed9ba5",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID da tarefa",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Tarefa deletada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Tarefa apagada com sucesso."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Não existe essa tarefa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Não existe essa tarefa."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
             }

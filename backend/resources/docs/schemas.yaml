@@ -1,0 +1,47 @@
+openapi: 3.0.0
+info:
+  title: API Documentation
+  version: 1.0.0
+components:
+  schemas:
+    Tarefa:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        description:
+          type: string
+        due_date:
+          type: string
+        assignee_id:
+          type: integer
+      required:
+        - title
+        - assignee_id
+    Funcionario:
+      type: object
+      properties:
+        id:
+          type: integer
+        first_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        department_id:
+          type: integer
+      required:
+        - first_name
+        - last_name
+    Departamento:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string

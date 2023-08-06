@@ -14,6 +14,10 @@ return [
                 */
                 'api' => 'api/documentation',
             ],
+            'schemas' => [
+                'path' => resource_path('resources/docs/schemas.yaml'),
+            ],
+
             'paths' => [
                 /*
                  * Edit to include full URL in ui for assets

@@ -13,7 +13,7 @@ use OpenApi\Annotations as OA;
 class DepartamentoController extends Controller
 {
 
-        /**
+    /**
      * Retorna todos os departamentos.
      *
      * @OA\Get(
@@ -25,7 +25,19 @@ class DepartamentoController extends Controller
      *         description="Lista de todos os departamentos",
      *         @OA\JsonContent(
      *             type="array",
-     *             @OA\Items(ref="#/components/schemas/Departamento"),
+     *             @OA\Items(
+     *                 type="object",
+     *                 @OA\Property(
+     *                     property="id",
+     *                     type="integer",
+     *                     description="ID do departamento"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="nome",
+     *                     type="string",
+     *                     description="Nome do departamento"
+     *                 ),
+     *             ),
      *         ),
      *     ),
      * )
@@ -53,7 +65,7 @@ class DepartamentoController extends Controller
      *         description="Detalhes do departamento",
      *         @OA\JsonContent(
      *             @OA\Property(property="message", type="string", example="Departamento editado com sucesso."),
-     *             @OA\Property(property="data", ref="#/components/schemas/Departamento"),
+     *             @OA\Property(property="data", type="object"),
      *         ),
      *     ),
      *     @OA\Response(
@@ -82,14 +94,20 @@ class DepartamentoController extends Controller
      *     tags={"Departamentos"},
      *     @OA\RequestBody(
      *         required=true,
-     *         @OA\JsonContent(ref="#/components/schemas/Departamento"),
+     *         @OA\JsonContent(
+     *              @OA\Property(
+     *                 property="nome",
+     *                 type="string",
+     *                 example="Nome do Departamento"
+     *             ),
+     *          ),
      *     ),
      *     @OA\Response(
      *         response=200,
      *         description="Departamento criado com sucesso",
      *         @OA\JsonContent(
      *             @OA\Property(property="message", type="string", example="Departamento criado com sucesso."),
-     *             @OA\Property(property="data", ref="#/components/schemas/Departamento"),
+     *             @OA\Property(property="data", type="object", example="{'nome': 'Nome do Departamento'}"),
      *         ),
      *     ),
      *     @OA\Response(
@@ -129,14 +147,25 @@ class DepartamentoController extends Controller
      *     ),
      *     @OA\RequestBody(
      *         required=true,
-     *         @OA\JsonContent(ref="#/components/schemas/Departamento"),
+     *         @OA\JsonContent(
+    *               @OA\Property(
+     *                 property="id",
+     *                 type="number",
+     *                 example="1"
+     *             ),
+     *               @OA\Property(
+     *                 property="nome",
+     *                 type="string",
+     *                 example="Nome do Departamento"
+     *             ),
+     *          ),
      *     ),
      *     @OA\Response(
      *         response=200,
      *         description="Departamento editado com sucesso",
      *         @OA\JsonContent(
      *             @OA\Property(property="message", type="string", example="Departamento editado com sucesso."),
-     *             @OA\Property(property="data", ref="#/components/schemas/Departamento"),
+     *             @OA\Property(property="data", type="object"),
      *         ),
      *     ),
      *     @OA\Response(

@@ -26,12 +26,43 @@ class FuncionarioController extends Controller
      *         description="Lista de todos os funcionários",
      *         @OA\JsonContent(
      *             type="array",
-     *             @OA\Items(ref="#/components/schemas/Funcionario"),
+     *             @OA\Items(
+     *                 type="object",
+     *                 @OA\Property(
+     *                     property="id",
+     *                     type="integer",
+     *                     description="ID do funcionário"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="first_name",
+     *                     type="string",
+     *                     description="Primeiro nome do funcionário"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="last_name",
+     *                     type="string",
+     *                     description="Último nome do funcionário"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="email",
+     *                     type="string",
+     *                     description="Email do funcionário"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="phone",
+     *                     type="string",
+     *                     description="Telefone do funcionário"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="department_id",
+     *                     type="integer",
+     *                     description="ID do departamento associado ao funcionário"
+     *                 ),
+     *             ),
      *         ),
      *     ),
      * )
-     * 
-     **/
+     */
     public function all() {
         return Funcionario::all();
     }
@@ -55,7 +86,7 @@ class FuncionarioController extends Controller
      *         description="Detalhes do funcionário",
      *         @OA\JsonContent(
      *             @OA\Property(property="message", type="string", example="Funcionário editado com sucesso."),
-     *             @OA\Property(property="data", ref="#/components/schemas/Funcionario"),
+     *             @OA\Property(property="data", type="object"),
      *         ),
      *     ),
      *     @OA\Response(
@@ -75,6 +106,8 @@ class FuncionarioController extends Controller
         return response()->json(['message' => 'Funcionário editado com sucesso.', 'data' => $funcionario], 200);
     }
 
+
+
     /**
      * Cria um novo funcionário.
      *
@@ -85,9 +118,11 @@ class FuncionarioController extends Controller
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
-     *             @OA\Property(property="name", type="string", example="João da Silva", description="Nome do funcionário"),
-     *             @OA\Property(property="role", type="string", example="Desenvolvedor", description="Cargo do funcionário"),
-     *             @OA\Property(property="department", type="string", example="TI", description="Departamento do funcionário"),
+     *             @OA\Property(property="first_name", type="string", example="João", description="Primeiro nome do funcionário"),
+     *             @OA\Property(property="last_name", type="string", example="da Silva", description="Sobrenome do funcionário"),
+     *             @OA\Property(property="email", type="string", example="joao@example.com", description="Email do funcionário"),
+     *             @OA\Property(property="phone", type="string", example="1234567890", description="Telefone do funcionário"),
+     *             @OA\Property(property="department_id", type="integer", example=1, description="ID do departamento associado ao funcionário"),
      *         ),
      *     ),
      *     @OA\Response(
@@ -95,7 +130,7 @@ class FuncionarioController extends Controller
      *         description="Funcionário criado com sucesso",
      *         @OA\JsonContent(
      *             @OA\Property(property="message", type="string", example="Funcionário criado com sucesso."),
-     *             @OA\Property(property="data", ref="#/components/schemas/Funcionario"),
+     *             @OA\Property(property="data", type="object"),
      *         ),
      *     ),
      *     @OA\Response(
@@ -136,9 +171,11 @@ class FuncionarioController extends Controller
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
-     *             @OA\Property(property="name", type="string", example="João da Silva", description="Nome do funcionário"),
-     *             @OA\Property(property="role", type="string", example="Desenvolvedor", description="Cargo do funcionário"),
-     *             @OA\Property(property="department", type="string", example="TI", description="Departamento do funcionário"),
+     *             @OA\Property(property="first_name", type="string", example="João", description="Primeiro nome do funcionário"),
+     *             @OA\Property(property="last_name", type="string", example="da Silva", description="Sobrenome do funcionário"),
+     *             @OA\Property(property="email", type="string", example="joao@example.com", description="Email do funcionário"),
+     *             @OA\Property(property="phone", type="string", example="1234567890", description="Telefone do funcionário"),
+     *             @OA\Property(property="department_id", type="integer", example=1, description="ID do departamento associado ao funcionário"),
      *         ),
      *     ),
      *     @OA\Response(
@@ -146,7 +183,7 @@ class FuncionarioController extends Controller
      *         description="Funcionário editado com sucesso",
      *         @OA\JsonContent(
      *             @OA\Property(property="message", type="string", example="Funcionário editado com sucesso."),
-     *             @OA\Property(property="data", ref="#/components/schemas/Funcionario"),
+     *             @OA\Property(property="data", type="object"),
      *         ),
      *     ),
      *     @OA\Response(
