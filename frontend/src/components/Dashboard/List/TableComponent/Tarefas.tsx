@@ -12,11 +12,11 @@ const Tarefas = () => {
     return (<>
     <table className="table">
     <thead>
-                <tr>
-                <th scope="col">#</th>
-                <th scope="col">Titulo</th>
-                <th scope="col">Opções</th>
-                </tr>
+        <tr>
+        <th scope="col">#</th>
+        <th scope="col">Titulo</th>
+        <th scope="col">Opções</th>
+        </tr>
     </thead>
     {   list.map((e: any, k: number) => {
            return(
