@@ -4,11 +4,7 @@ import { dashboardActions } from "../../../../store/dashboard-slice";
 import tarefaData from "../../../../data/Tarefa";
 const Tarefas = () => {
     const dispatch = useDispatch();
-    // let test = [{title: 'test'}, {title: 'testando'}];
     let list = useSelector((state: any) => state.dashboard.principalList);
-    if(list === undefined) return <></>;
-
-
     return (<>
     <table className="table">
     <thead>
