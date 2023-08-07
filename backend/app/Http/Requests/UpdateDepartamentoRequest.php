@@ -22,7 +22,15 @@ class UpdateDepartamentoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'string|required', 
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'name.required' => 'O campo nome é obrigatório.',
+            'name.string' => 'O campo nome deve ser uma string.',
         ];
     }
 }
