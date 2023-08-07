@@ -9,4 +9,8 @@ class Tarefa extends Model
 {
     use HasFactory;
     protected $fillable = ['title', 'description', 'due_date', 'assignee_id'];
+    public function funcionario()
+    {
+        return $this->belongsTo(Funcionario::class, 'assignee_id');
+    }
 }
