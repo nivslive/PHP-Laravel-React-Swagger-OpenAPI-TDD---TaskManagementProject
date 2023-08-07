@@ -1,9 +1,6 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import TableComponents from "./index";
-import { dashboardActions } from "../../../../store/dashboard-slice";
-import tarefaData from "../../../../data/Tarefa";
 const Tarefas = () => {
-    const dispatch = useDispatch();
     let list = useSelector((state: any) => state.dashboard.principalList);
     return (<>
     <table className="table">

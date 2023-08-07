@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import tarefaData from "../../../../data/Tarefa";
 import CloseButton from "./CloseButton";
-import Input from "./Input";
 import { dashboardActions } from "../../../../store/dashboard-slice";
 import { useDispatch, useSelector } from "react-redux";
 import funcionarioData from "../../../../data/Funcionario";
@@ -60,7 +59,7 @@ const Tarefa = () => {
         } else {
             setFuncionarios(selector.backupList.funcionarios);
         }
-    }, []);
+    }, [dispatch, selector.backupList.funcionarios]);
     const sendCreatedData = (e: any) => {
     e.preventDefault();
     tarefaData.create(data).then((e:any) => {
