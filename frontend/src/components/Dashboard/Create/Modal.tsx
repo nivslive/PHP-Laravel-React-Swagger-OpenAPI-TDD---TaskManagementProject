@@ -3,7 +3,6 @@ import Modals from './Modals';
 const Modal = () => {
     const listName = useSelector((state: any) => state.dashboard.listName);
     return (<>
-    {listName}
         {listName === 'tarefas' && <Modals.Tarefa />}
         {listName === 'departamentos' && <Modals.Departamento />}
         {listName === 'funcionarios' && <Modals.Funcionario />}
