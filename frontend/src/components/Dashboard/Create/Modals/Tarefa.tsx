@@ -82,13 +82,14 @@ const Tarefa = () => {
                 <CloseButton />
                 <form onSubmit={sendCreatedData}>
                 <div style={style.modalContent}>
+                <h5 className="pb-2"> Crie uma tarefa: </h5>
                     <div className="d-block">
                         <label className="me-2">title: </label>
                         <input name="title"  onChange={handleInputChange}/>   
                     </div> 
 
-                    <div className="d-block">
-                        <label className="me-2">assignee_id: </label>
+                    <div className="flex column">
+                        <label className="me-2">funcionáio (assignee_id): </label>
                         <Modals.Selects.Funcionarios handleInputChange={handleInputChange} />
                     </div> 
                     <hr />
