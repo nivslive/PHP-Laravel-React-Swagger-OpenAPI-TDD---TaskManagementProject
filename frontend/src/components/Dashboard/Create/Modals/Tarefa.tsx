@@ -48,12 +48,17 @@ const Tarefa = () => {
                     console.log(data, 'data')
                     const responseJson = await data.json();
                     console.log(responseJson);
-                    if(responseJson) setFuncionarios(await responseJson);
+                    if(responseJson) {
+                        dispatch(dashboardActions.setBackupData({listName: 'funcionarios', data: responseJson}));
+                        setFuncionarios(await responseJson)
+                    }
                 }
                 else {
                     setFuncionarios([]);
                 }
             });
+        } else {
+            setFuncionarios(selector.backupList.funcionarios);
         }
     }, []);
     const sendCreatedData = (e: any) => {
@@ -95,7 +100,7 @@ const Tarefa = () => {
                                         </option>
                                     ))}
                             </select>
-                       )}  
+                        )}
                     </div> 
                     <hr />
                     <hr />

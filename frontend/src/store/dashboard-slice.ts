@@ -60,6 +60,15 @@ export const dashboardSlice = createSlice({
         state.principalList = state.backupList.funcionarios;
       }
     },
+    setBackupData(state, action: PayloadAction<any>) {      
+      if(action.payload.listName === 'funcionarios') {
+        state.backupList.funcionarios = action.payload.data;
+      } else if(action.payload.listName  === 'tarefas')  {
+        state.backupList.tarefas = action.payload.data;
+      } else if(action.payload.listName === 'departamentos') {
+        state.backupList.departamentos = action.payload.data;
+      }
+    },
     searchByWord: (state, action: PayloadAction<any>) => {
       if(state.listName === 'funcionarios') {
         state.principalList = state.backupList.funcionarios;
