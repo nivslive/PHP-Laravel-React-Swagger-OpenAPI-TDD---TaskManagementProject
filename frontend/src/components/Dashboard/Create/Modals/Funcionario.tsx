@@ -4,6 +4,7 @@ import CloseButton from "./CloseButton";
 import Input from "./Input";
 import { useDispatch } from "react-redux";
 import { dashboardActions } from "../../../../store/dashboard-slice";
+import Modals from ".";
 const style: any = {
     p: {},
     editModal: {
@@ -63,7 +64,7 @@ const Funcionario = () => {
                 <CloseButton />
                 <form onSubmit={sendCreatedData}>
                 <div style={style.modalContent}>
-                <h5 className="pb-2"> Crie um departamento </h5>
+                <h5 className="pb-2"> Crie um funcionário: </h5>
                     <div className="d-block">
                         <label className="me-2">first_name: </label>
                         <input name="first_name"  onChange={handleInputChange}/>   
@@ -92,7 +93,8 @@ const Funcionario = () => {
 
                     <div className="d-block">
                         <label className="me-2">department_id: </label>
-                        <input name="department_id"  onChange={handleInputChange}/>   
+                        <Modals.Selects.Departamentos handleInputChange={handleInputChange} />
+                        {/* <input name="department_id"  onChange={handleInputChange}/>    */}
                     </div> 
                     <hr />
                     <hr />

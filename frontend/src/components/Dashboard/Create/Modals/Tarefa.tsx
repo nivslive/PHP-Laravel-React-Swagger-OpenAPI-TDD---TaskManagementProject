@@ -4,6 +4,7 @@ import CloseButton from "./CloseButton";
 import { dashboardActions } from "../../../../store/dashboard-slice";
 import { useDispatch, useSelector } from "react-redux";
 import funcionarioData from "../../../../data/Funcionario";
+import Modals from ".";
 const style: any = {
     p: {},
     editModal: {
@@ -38,28 +39,28 @@ const Tarefa = () => {
     title: "",
     assignee_id: null,
     });
-    const selector = useSelector((state:any) => state.dashboard);
-    const [funcionarios, setFuncionarios] = useState<any>([]);
-    useEffect(() => {
-        if (selector.backupList.funcionarios.length === 0) {
-            funcionarioData.all().then(async (data: any) => {
-                if(data.ok && data !== undefined) {
-                    console.log(data, 'data')
-                    const responseJson = await data.json();
-                    console.log(responseJson);
-                    if(responseJson) {
-                        dispatch(dashboardActions.setBackupData({listName: 'funcionarios', data: responseJson}));
-                        setFuncionarios(await responseJson)
-                    }
-                }
-                else {
-                    setFuncionarios([]);
-                }
-            });
-        } else {
-            setFuncionarios(selector.backupList.funcionarios);
-        }
-    }, [dispatch, selector.backupList.funcionarios]);
+    // const selector = useSelector((state:any) => state.dashboard);
+    // const [funcionarios, setFuncionarios] = useState<any>([]);
+    // useEffect(() => {
+    //     if (selector.backupList.funcionarios.length === 0) {
+    //         funcionarioData.all().then(async (data: any) => {
+    //             if(data.ok && data !== undefined) {
+    //                 console.log(data, 'data')
+    //                 const responseJson = await data.json();
+    //                 console.log(responseJson);
+    //                 if(responseJson) {
+    //                     dispatch(dashboardActions.setBackupData({listName: 'funcionarios', data: responseJson}));
+    //                     setFuncionarios(await responseJson)
+    //                 }
+    //             }
+    //             else {
+    //                 setFuncionarios([]);
+    //             }
+    //         });
+    //     } else {
+    //         setFuncionarios(selector.backupList.funcionarios);
+    //     }
+    // }, [dispatch, selector.backupList.funcionarios]);
     const sendCreatedData = (e: any) => {
     e.preventDefault();
     tarefaData.create(data).then((e:any) => {
@@ -88,18 +89,7 @@ const Tarefa = () => {
 
                     <div className="d-block">
                         <label className="me-2">assignee_id: </label>
-                        {/* <input name="assignee_id"  onChange={handleInputChange}/>    */}
-                        {funcionarios.length === 0 && <input name="assignee_id"  onChange={handleInputChange}/>  }
-                        {funcionarios.length !== 0 && (
-                            <select name="assignee_id" onChange={handleInputChange}>
-                                    <option value="">Selecione um Funcionário</option>
-                                    {funcionarios.map((funcionario: any) => (
-                                        <option key={funcionario.id} value={funcionario.id}>
-                                            {funcionario.first_name}
-                                        </option>
-                                    ))}
-                            </select>
-                        )}
+                        <Modals.Selects.Funcionarios handleInputChange={handleInputChange} />
                     </div> 
                     <hr />
                     <hr />
