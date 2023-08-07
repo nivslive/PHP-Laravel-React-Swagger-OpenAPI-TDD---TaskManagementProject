@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import tarefaData from "../../../../data/Tarefa";
 import CloseButton from "./CloseButton";
 import Input from "./Input";
 import { dashboardActions } from "../../../../store/dashboard-slice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import funcionarioData from "../../../../data/Funcionario";
 const style: any = {
     p: {},
     editModal: {
@@ -35,25 +36,41 @@ const style: any = {
 const Tarefa = () => {
     const dispatch = useDispatch();
     const [data, setData] = useState({
-        title: "",
-        assignee_id: null,
-      });
-    
-      const sendCreatedData = (e: any) => {
-        e.preventDefault();
-        tarefaData.create(data).then((e:any) => {
-            dispatch(dashboardActions.closeCreateModal());
-            dispatch(dashboardActions.putCreatedData(data));
-        });
-      };
-    
-      const handleInputChange = (e: any) => {
-        const { name, value } = e.target;
-        setData((prevData) => ({
-          ...prevData,
-          [name]: value,
-        }));
-      };
+    title: "",
+    assignee_id: null,
+    });
+    const selector = useSelector((state:any) => state.dashboard);
+    const [funcionarios, setFuncionarios] = useState<any>([]);
+    useEffect(() => {
+        if (selector.backupList.funcionarios.length === 0) {
+            funcionarioData.all().then(async (data: any) => {
+                if(data.ok && data !== undefined) {
+                    console.log(data, 'data')
+                    const responseJson = await data.json();
+                    console.log(responseJson);
+                    if(responseJson) setFuncionarios(await responseJson);
+                }
+                else {
+                    setFuncionarios([]);
+                }
+            });
+        }
+    }, []);
+    const sendCreatedData = (e: any) => {
+    e.preventDefault();
+    tarefaData.create(data).then((e:any) => {
+        dispatch(dashboardActions.closeCreateModal());
+        dispatch(dashboardActions.putCreatedData(data));
+    });
+    };
+
+    const handleInputChange = (e: any) => {
+    const { name, value } = e.target;
+    setData((prevData) => ({
+        ...prevData,
+        [name]: value,
+    }));
+    };
     return (
         <div style={style.editModal}>
             <div style={style.editModal.container}>
@@ -67,7 +84,18 @@ const Tarefa = () => {
 
                     <div className="d-block">
                         <label className="me-2">assignee_id: </label>
-                        <input name="assignee_id"  onChange={handleInputChange}/>   
+                        {/* <input name="assignee_id"  onChange={handleInputChange}/>    */}
+                        {funcionarios.length === 0 && <input name="assignee_id"  onChange={handleInputChange}/>  }
+                        {funcionarios.length !== 0 && (
+                            <select name="assignee_id" onChange={handleInputChange}>
+                                    <option value="">Selecione um Funcionário</option>
+                                    {funcionarios.map((funcionario: any) => (
+                                        <option key={funcionario.id} value={funcionario.id}>
+                                            {funcionario.first_name}
+                                        </option>
+                                    ))}
+                            </select>
+                       )}  
                     </div> 
                     <hr />
                     <hr />
