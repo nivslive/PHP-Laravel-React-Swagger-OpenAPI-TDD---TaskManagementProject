@@ -6,6 +6,7 @@ import moment from "moment";
 import { dashboardActions } from "../../../store/dashboard-slice";
 import tarefaData from "../../../data/Tarefa";
 import funcionarioData from "../../../data/Funcionario";
+import Selects from "./Selects";
 
 const style: any = {
    p: {},
@@ -79,7 +80,7 @@ const Funcionario = () => {
             [e.target.last_name.name]: e.target.last_name.value,
             [e.target.phone.name]: e.target.phone.value,       
             [e.target.email.name]: e.target.email.value,          
-            [e.target.department_id.name]: e.target.department_id.value,
+            department_id: Number(e.target.department_id.value),
         }));
     }
 
@@ -88,6 +89,13 @@ const Funcionario = () => {
         setEditedData((prevData) => ({
             ...prevData,
             [name]: value
+        }));
+    };
+
+    const handleSelectChange = (event: React.ChangeEvent<any>) => {
+        setEditedData((prevData) => ({
+            ...prevData,
+            department_id: Number(event.target.value)
         }));
     };
 
@@ -102,7 +110,8 @@ const Funcionario = () => {
                     <Input name="last_name" label="Edite o last_name:" value={editedData.last_name} onChange={handleInputChange} />
                     <Input name="phone" label="Edite a phone:" value={editedData.phone} onChange={handleInputChange} />
                     <Input name="email" label="Edite o email:" value={editedData.email} onChange={handleInputChange} />
-                    <Input name="department_id" label="Edite o department_id:" value={editedData.department_id} onChange={handleInputChange} />
+                    {/* <Input name="department_id" label="Edite o department_id:" value={editedData.department_id} onChange={handleInputChange} /> */}
+                    <Selects.Departamentos id={editedData.department_id} handleInputChange={handleSelectChange} />
                     <p> Criado em: {moment(editedData.created_at).format('D/m/Y H:s')}</p>
                     <hr />
                 </div>
