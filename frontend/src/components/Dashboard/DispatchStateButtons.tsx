@@ -11,11 +11,11 @@ const Buttons = () => {
         {name: 'tarefas', url: '/tarefas'},    
     ];
 
-    return <> 
+    return <div className="d-flex justify-content-center"> 
     {
         dataButtons.map((button, k) => <Button key={k} url={button.url} name={button.name}/>)
     }
-    </>;
+    </div>;
 };
 
 export default Buttons;

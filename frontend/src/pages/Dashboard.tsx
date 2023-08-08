@@ -24,12 +24,11 @@ const Dashboard = () => {
     }
 
     return (<> 
-        <div className={`d-flex p-3`}>
-            
-            <DashboardComponents.Buttons/>
-            <DashboardComponents.Search/>
+        <div className={`d-flex p-3 flex-md-row flex-column justify-content-sm-center m-sm-auto`}>
+                <DashboardComponents.Buttons/>
+                <DashboardComponents.Search/>
 
-            <DashboardComponents.Create.Button />
+                <DashboardComponents.Create.Button />
         
         </div>
         {selector.dashboard.iCanSeeCreateModal && <DashboardComponents.Create.Modal /> }
