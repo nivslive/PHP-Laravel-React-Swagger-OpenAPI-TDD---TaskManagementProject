@@ -1,9 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import tarefaData from "../../../../data/Tarefa";
 import CloseButton from "./CloseButton";
 import { dashboardActions } from "../../../../store/dashboard-slice";
-import { useDispatch, useSelector } from "react-redux";
-import funcionarioData from "../../../../data/Funcionario";
+import { useDispatch } from "react-redux";
 import Modals from ".";
 const style: any = {
     p: {},
@@ -39,43 +38,34 @@ const Tarefa = () => {
     title: "",
     assignee_id: null,
     });
-    // const selector = useSelector((state:any) => state.dashboard);
-    // const [funcionarios, setFuncionarios] = useState<any>([]);
-    // useEffect(() => {
-    //     if (selector.backupList.funcionarios.length === 0) {
-    //         funcionarioData.all().then(async (data: any) => {
-    //             if(data.ok && data !== undefined) {
-    //                 console.log(data, 'data')
-    //                 const responseJson = await data.json();
-    //                 console.log(responseJson);
-    //                 if(responseJson) {
-    //                     dispatch(dashboardActions.setBackupData({listName: 'funcionarios', data: responseJson}));
-    //                     setFuncionarios(await responseJson)
-    //                 }
-    //             }
-    //             else {
-    //                 setFuncionarios([]);
-    //             }
-    //         });
-    //     } else {
-    //         setFuncionarios(selector.backupList.funcionarios);
-    //     }
-    // }, [dispatch, selector.backupList.funcionarios]);
+
     const sendCreatedData = (e: any) => {
-    e.preventDefault();
-    tarefaData.create(data).then((e:any) => {
-        dispatch(dashboardActions.closeCreateModal());
-        dispatch(dashboardActions.putCreatedData(data));
-    });
+        e.preventDefault();
+        tarefaData.create(data).then((e:any) => {
+            const updatedData = {
+                ...data,
+                assignee_id: data.assignee_id !== null ? Number(data.assignee_id) : null,
+            };
+        
+            dispatch(dashboardActions.closeCreateModal());
+            dispatch(dashboardActions.putCreatedData(updatedData));
+        });
     };
 
     const handleInputChange = (e: any) => {
     const { name, value } = e.target;
-    setData((prevData) => ({
-        ...prevData,
-        [name]: value,
-    }));
+        setData((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
     };
+
+    const handleSelectAssigneeId = (e:any) => {
+        setData((prevData) => ({
+            ...prevData,
+            assignee_id: e.target.value,
+        }));
+    }
     return (
         <div style={style.editModal}>
             <div style={style.editModal.container}>
@@ -90,7 +80,7 @@ const Tarefa = () => {
 
                     <div className="flex column">
                         <label className="me-2">funcionáio (assignee_id): </label>
-                        <Modals.Selects.Funcionarios handleInputChange={handleInputChange} />
+                        <Modals.Selects.Funcionarios handleInputChange={handleSelectAssigneeId} />
                     </div> 
                     <hr />
                     <hr />

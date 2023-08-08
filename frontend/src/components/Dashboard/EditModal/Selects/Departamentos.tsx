@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import departamentoData from "../../../../../data/Departamento";
-import { dashboardActions } from "../../../../../store/dashboard-slice";
+import departamentoData from "../../../../data/Departamento";
+import { dashboardActions } from "../../../../store/dashboard-slice";
 
 const Departamentos = ({handleInputChange}: any) => {
     const dispatch = useDispatch();

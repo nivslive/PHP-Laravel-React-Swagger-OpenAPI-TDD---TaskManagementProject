@@ -5,6 +5,7 @@ import Input from "./Input";
 import moment from "moment";
 import { dashboardActions } from "../../../store/dashboard-slice";
 import tarefaData from "../../../data/Tarefa";
+import Selects from "./Selects";
 
 const style: any = {
    p: {},
@@ -64,9 +65,9 @@ const Tarefa = () => {
 
     useEffect(() => {
         dispatch(dashboardActions.putEditedDataOnItem({editedData}));
-        const body = {title: editedData.title, description: editedData.description};
+        const body = {title: editedData.title, description: editedData.description, assignee_id: editedData.assignee_id};
         tarefaData.update(`/${editedData.id}`, body);
-    }, [editedData]);
+    }, [dispatch, editedData]);
 
     function sendEditedData(e: any) {
         e.preventDefault();
@@ -74,7 +75,7 @@ const Tarefa = () => {
             ...prevData,
             [e.target.title.name]: e.target.title.value,
             [e.target.description.name]: e.target.description.value,
-            [e.target.assignee_id.name]: e.target.assignee_id.value,
+            assignee_id: Number(assigneeEvent),
         }));
     }
 
@@ -85,6 +86,15 @@ const Tarefa = () => {
             [name]: value
         }));
     };
+
+    const [assigneeEvent, setAssigneeSelect] = useState<any>(selector.editData.assignee_id);
+    const handleSelectChange = (event: any) => {
+        setAssigneeSelect(event.target.value);
+        setEditedData((prevData) => ({
+            ...prevData,
+            assignee_id: Number(event.target.value),
+        }));
+    }
 
     return (
         <div style={style.editModal}>
@@ -97,7 +107,10 @@ const Tarefa = () => {
                     <h4>Description</h4>
                     <i><p style={style.p}>{editedData.description}</p></i>
                     <Input name="description" label="Edite a description:" value={editedData.description} onChange={handleInputChange} />
-                    <Input name="assignee_id" label="Assignee Id" value={editedData.assignee_id} onChange={handleInputChange} />
+                    {/* <Input name="assignee_id" label="Assignee Id" value={editedData.assignee_id} onChange={handleInputChange} /> */}
+                    <h4>Responsável</h4>
+                    <Selects.Funcionarios id={editedData.assignee_id} handleInputChange={handleSelectChange} />
+                    <hr />
                     <p> Criado em: {moment(editedData.created_at).format('D/m/Y H:s')}</p>
                     <hr />
                 </div>

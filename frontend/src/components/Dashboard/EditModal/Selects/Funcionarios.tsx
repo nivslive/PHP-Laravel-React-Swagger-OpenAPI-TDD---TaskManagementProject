@@ -1,41 +1,50 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import funcionarioData from "../../../../../data/Funcionario";
-import { dashboardActions } from "../../../../../store/dashboard-slice";
+import funcionarioData from "../../../../data/Funcionario";
+import { dashboardActions } from "../../../../store/dashboard-slice";
 
-const Funcionarios = ({handleInputChange}: any) => {
+const Funcionarios = (props: any) => {
     const dispatch = useDispatch();
     const selector = useSelector((state:any) => state.dashboard);
     const [funcionarios, setFuncionarios] = useState<any>([]);
     useEffect(() => {
+        let isMounted = true;
+
         if (selector.backupList.funcionarios.length === 0) {
             funcionarioData.all().then(async (data: any) => {
-                if(data.ok && data !== undefined) {
+                if (isMounted && data.ok && data !== undefined) {
                     const responseJson = await data.json();
-                    if(responseJson) {
+                    if (responseJson) {
                         dispatch(dashboardActions.setBackupData({listName: 'funcionarios', data: responseJson}));
-                        setFuncionarios(await responseJson)
+                        setFuncionarios(responseJson);
                     }
-                }
-                else {
+                } else {
                     setFuncionarios([]);
                 }
             });
         } else {
             setFuncionarios(selector.backupList.funcionarios);
         }
+
+        return () => {
+            isMounted = false;
+        };
     }, [dispatch, selector.backupList.funcionarios]);
+
+    const handleInputChange = (event: React.ChangeEvent<HTMLSelectElement> | any) => {
+        props.handleInputChange(event);
+    };
     return (
         <>
         {funcionarios.length === 0 && <input name="assignee_id"  onChange={handleInputChange}/>  }
             {funcionarios.length !== 0 && (
                 <select name="assignee_id" onChange={handleInputChange}>
-                        <option value="">Selecione um Funcionário</option>
-                        {funcionarios.map((funcionario: any) => (
-                            <option key={funcionario.id} value={funcionario.id}>
-                                {funcionario.first_name}
-                            </option>
-                        ))}
+                    <option defaultValue="">Selecione um Funcionário</option>
+                    {funcionarios.map((funcionario: any) => (
+                        <option selected={props.id === funcionario.id} key={funcionario.id} value={funcionario.id}>
+                            {funcionario.first_name}
+                        </option>
+                    ))}
                 </select>
         )}
         </>
