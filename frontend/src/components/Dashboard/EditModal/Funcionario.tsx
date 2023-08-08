@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import Input from "./Input";
 import moment from "moment";
 import { dashboardActions } from "../../../store/dashboard-slice";
-import tarefaData from "../../../data/Tarefa";
 import funcionarioData from "../../../data/Funcionario";
 import Selects from "./Selects";
 
@@ -70,7 +69,7 @@ const Funcionario = () => {
         dispatch(dashboardActions.putEditedDataOnItem({editedData}));
         const body = {first_name: editedData.first_name, last_name: editedData.last_name, phone: editedData.phone, email: editedData.email, department_id: editedData.department_id};
         funcionarioData.update(`/${editedData.id}`, body);
-    }, [editedData]);
+    }, [dispatch, editedData]);
 
     function sendEditedData(e: any) {
         e.preventDefault();
