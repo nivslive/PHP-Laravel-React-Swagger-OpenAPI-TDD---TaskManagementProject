@@ -164,7 +164,7 @@ class TarefaController extends Controller
         }
         
         $tarefa->update($request->except('_token'));
-        return response()->json(['message' => 'Tarefa is created!', 'data' => $tarefa ], 200);
+        return response()->json(['message' => 'Tarefa foi atualizada!', 'data' => $tarefa ], 200);
     }
 
    /**
