@@ -134,9 +134,6 @@ export const dashboardSlice = createSlice({
       } else if (state.listName === 'funcionarios') {
         state.backupList.funcionarios.push(action.payload);
         state.principalList = state.backupList.funcionarios;
-      } else if (state.listName === 'outraLista') {
-        state.backupList.outraLista.push(action.payload);
-        state.principalList = state.backupList.outraLista;
       }
     },
     
