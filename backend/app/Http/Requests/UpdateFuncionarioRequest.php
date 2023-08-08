@@ -25,7 +25,7 @@ class UpdateFuncionarioRequest extends FormRequest
             'first_name' => 'required|string',
             'last_name' => 'required|string',
             'phone' => 'nullable|string',
-            'email' => 'email|unique:funcionarios,email', // Adicione a tabela 'funcionarios' para evitar conflitos
+            'email' => 'email', // Adicione a tabela 'funcionarios' para evitar conflitos
         ];
     }
 
@@ -41,7 +41,6 @@ class UpdateFuncionarioRequest extends FormRequest
             'last_name.required' => 'O campo sobrenome é obrigatório.',
             'phone.string' => 'O campo telefone deve ser uma string.',
             'email.email' => 'O campo email deve ser um endereço de email válido.',
-            'email.unique' => 'Este endereço de email já está em uso.',
         ];
     }
 }
