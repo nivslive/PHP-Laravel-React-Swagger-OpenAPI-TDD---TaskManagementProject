@@ -17,6 +17,9 @@ composer update
 ### 3. Execute as migrações do banco de dados para criar as tabelas necessárias (com as seeders):
 php artisan migrate --seed (caso já tenha subido alguma migração, pra não gerar conflito utlize php artisan migrate:fresh --seed)
 
+### 4. Crie as keys (key principal e secret key do JWT)
+php artisan key:generate && php artisan jwt:secret
+
 
 ## Testes no Laravel
 
