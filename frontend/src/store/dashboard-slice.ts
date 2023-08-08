@@ -139,7 +139,6 @@ export const dashboardSlice = createSlice({
     
     searchByFuncionario: (state, action: PayloadAction<any>) => {
       // only tarefas list
-      console.log(action.payload);
       if(state.listName === 'tarefas') {
         state.principalList = state.backupList.tarefas;
         if(!Number.isNaN(action.payload)) {
