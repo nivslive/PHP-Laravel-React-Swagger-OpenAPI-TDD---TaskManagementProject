@@ -2,8 +2,9 @@ const ErrorPage = (props: any) => {
   if(props.typeError === 'db') {
     return (
         <div className="container text-center mt-5">
-            <h1 className="display-1">Erro no servidor. </h1>
-            <p className="lead">Tente novamente mais tarde.</p>
+            <h1 className="display-1">Erro de requisição com servidor. </h1>
+            <p className="lead">Sua sessão pode ter finalizado. Clique logo abaixo para ir para página de login.</p>
+            <a className="btn btn-primary" href="/login">Ir para página de Login</a>
         </div>
     );
   }
