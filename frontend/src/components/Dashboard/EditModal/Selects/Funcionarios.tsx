@@ -38,7 +38,7 @@ const Funcionarios = (props: any) => {
         <>
         {funcionarios.length === 0 && <input name="assignee_id"  onChange={handleInputChange}/>  }
             {funcionarios.length !== 0 && (
-                <select name="assignee_id" onChange={handleInputChange}>
+                <select className="form-control" name="assignee_id" onChange={handleInputChange}>
                     <option defaultValue="">Selecione um Funcionário</option>
                     {funcionarios.map((funcionario: any) => (
                         <option selected={props.id === funcionario.id} key={funcionario.id} value={funcionario.id}>

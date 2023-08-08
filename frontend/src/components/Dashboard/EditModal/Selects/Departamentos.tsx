@@ -29,7 +29,7 @@ const Departamentos = ({handleInputChange}: any) => {
         <>
         {departamentos.length === 0 && <input name="department_id"  onChange={handleInputChange}/>  }
             {departamentos.length !== 0 && (
-                <select name="department_id" onChange={handleInputChange}>
+                <select className="form-control" name="department_id" onChange={handleInputChange}>
                         <option value="">Selecione um Departamento</option>
                         {departamentos.map((departamento: any) => (
                             <option key={departamento.id} value={departamento.id}>

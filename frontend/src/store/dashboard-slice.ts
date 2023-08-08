@@ -138,11 +138,18 @@ export const dashboardSlice = createSlice({
         state.backupList.outraLista.push(action.payload);
         state.principalList = state.backupList.outraLista;
       }
-    }
+    },
     
-    // searchByFuncionario: (state, action: PayloadAction<any>) => {
-
-    // }
+    searchByFuncionario: (state, action: PayloadAction<any>) => {
+      // only tarefas list
+      console.log(action.payload);
+      if(state.listName === 'tarefas') {
+        state.principalList = state.backupList.tarefas;
+        if(!Number.isNaN(action.payload)) {
+          state.principalList = state.principalList.filter((e: any) => e.assignee_id === action.payload)
+        }
+      }
+    }
   },
 })
 

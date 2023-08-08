@@ -7,7 +7,11 @@ const capitalizeFirstLetter = (string: string) => {
 const List = () => {
     const listName = useSelector((store: any) => store.dashboard.listName);
     return <> 
-    <h1 className="ps-2">{capitalizeFirstLetter(listName)}</h1>
+    <div className="d-flex w-100">
+        <h1 className="ps-2">{capitalizeFirstLetter(listName)}</h1>
+        {listName === 'tarefas' && <ListComponents.Tarefas.SearchByFuncionario />}
+    </div>
+
     <ListComponents.Table />
     </>;
 };
