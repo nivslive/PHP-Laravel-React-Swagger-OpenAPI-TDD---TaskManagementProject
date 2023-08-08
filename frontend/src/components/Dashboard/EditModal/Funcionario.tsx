@@ -110,6 +110,7 @@ const Funcionario = () => {
                     <Input name="phone" label="Edite a phone:" value={editedData.phone} onChange={handleInputChange} />
                     <Input name="email" label="Edite o email:" value={editedData.email} onChange={handleInputChange} />
                     {/* <Input name="department_id" label="Edite o department_id:" value={editedData.department_id} onChange={handleInputChange} /> */}
+                    <label> Troque o departamento: </label>
                     <Selects.Departamentos id={editedData.department_id} handleInputChange={handleSelectChange} />
                     <p> Criado em: {moment(editedData.created_at).format('D/m/Y H:s')}</p>
                     <hr />
