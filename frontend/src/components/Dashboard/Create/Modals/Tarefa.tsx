@@ -78,7 +78,7 @@ const Tarefa = () => {
                         <input name="title"  onChange={handleInputChange}/>   
                     </div> 
 
-                    <div className="flex column">
+                    <div className="flex column mt-3">
                         <label className="me-2">funcionáio (assignee_id): </label>
                         <Modals.Selects.Funcionarios handleInputChange={handleSelectAssigneeId} />
                     </div> 
